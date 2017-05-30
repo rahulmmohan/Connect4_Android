@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Connect 4</string>
+
+    <!-- Level -->
+    <string name="level_0">Easy</string>
+    <string name="level_1">Normal</string>
+    <string name="level_2">Hard</string>
+
+    <!-- game opponent modes -->
+    <string name="opponent_ai">AI</string>
+    <string name="opponent_player">Player</string>
+
 </resources>
