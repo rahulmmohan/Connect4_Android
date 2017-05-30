@@ -1,4 +1,4 @@
-package info.overrideandroid.connect4.view;
+package info.overrideandroid.connect4.board;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,15 +13,17 @@ import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
 
-import static info.overrideandroid.connect4.controller.GameBoardController.COLS;
-import static info.overrideandroid.connect4.controller.GameBoardController.ROWS;
+import static info.overrideandroid.connect4.board.BoardController.COLS;
+import static info.overrideandroid.connect4.board.BoardController.ROWS;
 
 /**
  * Created by Rahul on 30/05/17.
  */
 
-public class GameView extends RelativeLayout {
+public class BoardView extends RelativeLayout {
 
+
+    private GameRules gameRules;
 
     /**
      * view holder for player information
@@ -51,17 +53,17 @@ public class GameView extends RelativeLayout {
     private Context mContext;
 
 
-    public GameView(Context context) {
+    public BoardView(Context context) {
         super(context);
         init(context);
     }
 
-    public GameView(Context context, AttributeSet attrs) {
+    public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BoardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -75,15 +77,16 @@ public class GameView extends RelativeLayout {
     }
 
     public void initialize(GameRules gameRules) {
-        setPlayer1(gameRules);
-        setPlayer2(gameRules);
+        this.gameRules = gameRules;
+        setPlayer1();
+        setPlayer2();
         buildCells();
     }
 
     /**
      * initialize player1 information with Gamerules
      */
-    public void setPlayer1(GameRules gameRules) {
+    public void setPlayer1() {
         player1.disc.setImageResource(gameRules.getRule(GameRules.DISC));
         player1.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
                 mContext.getString(R.string.you) : mContext.getString(R.string.player1));
@@ -93,7 +96,7 @@ public class GameView extends RelativeLayout {
     /**
      * initialize player2 information with Gamerules
      */
-    public void setPlayer2(GameRules gameRules) {
+    public void setPlayer2() {
         player2.disc.setImageResource(gameRules.getRule(GameRules.DISC2));
         player2.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
                 mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.player2));
@@ -123,11 +126,12 @@ public class GameView extends RelativeLayout {
      * @param col
      * @param row
      */
-    public void dropDisc(int col,int row) {
+    public void dropDisc(int col, int row, int playerTurn) {
         final ImageView cell = cells[row][col];
         float move = -(cell.getHeight() * row + cell.getHeight() + 15);
         cell.setY(move);
-        cell.setImageResource(R.drawable.red);
+        cell.setImageResource(playerTurn == Player.PLAYER1 ?
+                gameRules.getRule(GameRules.DISC) : gameRules.getRule(GameRules.DISC2));
         TranslateAnimation anim = new TranslateAnimation(0, 0, 0, Math.abs(move));
         anim.setDuration(850);
         anim.setFillAfter(true);

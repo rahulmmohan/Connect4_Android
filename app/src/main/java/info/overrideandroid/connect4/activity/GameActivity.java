@@ -5,21 +5,21 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import info.overrideandroid.connect4.R;
-import info.overrideandroid.connect4.controller.GameBoardController;
+import info.overrideandroid.connect4.board.BoardController;
 import info.overrideandroid.connect4.rules.GameRules;
-import info.overrideandroid.connect4.view.GameView;
+import info.overrideandroid.connect4.board.BoardView;
 
 public class GameActivity extends AppCompatActivity {
 
-    GameBoardController gameController;
+    BoardController gameController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        GameView gameView = (GameView)findViewById(R.id.gameView);
-        gameController = new GameBoardController(this,gameView,getGameRules());
+        BoardView boardView = (BoardView)findViewById(R.id.gameView);
+        gameController = new BoardController(this, boardView,getGameRules());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
     }
