@@ -10,4 +10,8 @@
     <string name="opponent_ai">AI</string>
     <string name="opponent_player">Player</string>
 
+    <string name="you">You</string>
+    <string name="player1">Player 1</string>
+    <string name="player2">Player 2</string>
+    <string name="restart_game">restart Game</string>
 </resources>

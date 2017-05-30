@@ -51,12 +51,12 @@ public class GameRules {
     /**
      * Color disc settings
      */
-    public class Token extends Rule {
+    public class Disc extends Rule {
         public static final int RED = R.drawable.red;
         public static final int YELLOW = R.drawable.yellow;
 
 
-        Token() {
+        Disc() {
             super(new int[]{RED, YELLOW});
         }
     }
@@ -67,8 +67,8 @@ public class GameRules {
     public static final int FIRST_TURN = 0;
     public static final int LEVEL = 1;
     public static final int OPPONENT = 2;
-    public static final int TOKEN = 3;
-    public static final int TOKEN2 = 4; // 2nd player token
+    public static final int DISC = 3;
+    public static final int DISC2 = 4; // 2nd player token
 
     /**
      * rules
@@ -83,8 +83,8 @@ public class GameRules {
                 new FirstTurn(),
                 new Level(),
                 new Opponent(),
-                new Token(),
-                new Token()
+                new Disc(),
+                new Disc()
         };
     }
 
