@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -148,8 +150,10 @@ public class BoardView extends RelativeLayout {
         cell.setImageResource(playerTurn == Player.PLAYER1 ?
                 gameRules.getRule(GameRules.DISC) : gameRules.getRule(GameRules.DISC2));
         TranslateAnimation anim = new TranslateAnimation(0, 0, 0, Math.abs(move));
-        anim.setDuration(850);
+        anim.setDuration(800);
         anim.setFillAfter(true);
+        anim.setInterpolator(new AccelerateInterpolator());
+        anim.setInterpolator(new BounceInterpolator());
         cell.startAnimation(anim);
     }
 

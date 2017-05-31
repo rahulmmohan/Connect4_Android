@@ -23,7 +23,7 @@
                 android:id="@+id/player1_disc"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/red" />
+                android:src="@drawable/red_disc" />
 
             <TextView
                 android:gravity="center"
@@ -37,8 +37,8 @@
             <View
                 android:id="@+id/player1_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="#000" />
+                android:layout_height="7dp"
+                android:background="#fff" />
 
         </LinearLayout>
 
@@ -54,7 +54,7 @@
                 android:id="@+id/player2_disc"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/yellow" />
+                android:src="@drawable/yellow_disc" />
 
             <TextView
                 android:gravity="center"
@@ -68,8 +68,8 @@
             <View
                 android:id="@+id/player2_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="#000" />
+                android:layout_height="7dp"
+                android:background="#fff" />
 
         </LinearLayout>
 
