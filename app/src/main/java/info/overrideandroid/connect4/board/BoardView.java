@@ -50,6 +50,8 @@ public class BoardView extends RelativeLayout {
 
     private View boardView;
 
+    private TextView winnerView;
+
     private Context mContext;
 
 
@@ -74,12 +76,14 @@ public class BoardView extends RelativeLayout {
         player1 = new PlayerInformation(R.id.player1_name, R.id.player1_disc, R.id.player1_indicator);
         player2 = new PlayerInformation(R.id.player2_name, R.id.player2_disc, R.id.player2_indicator);
         boardView = findViewById(R.id.game_board);
+        winnerView = (TextView) findViewById(R.id.winner_text);
     }
 
     public void initialize(GameRules gameRules) {
         this.gameRules = gameRules;
         setPlayer1();
         setPlayer2();
+        togglePlayer(gameRules.getRule(GameRules.FIRST_TURN));
         buildCells();
     }
 
@@ -90,7 +94,6 @@ public class BoardView extends RelativeLayout {
         player1.disc.setImageResource(gameRules.getRule(GameRules.DISC));
         player1.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
                 mContext.getString(R.string.you) : mContext.getString(R.string.player1));
-        player1.turnIndicator.setVisibility(gameRules.getRule(GameRules.FIRST_TURN) == Player.PLAYER1 ? VISIBLE : INVISIBLE);
     }
 
     /**
@@ -100,8 +103,6 @@ public class BoardView extends RelativeLayout {
         player2.disc.setImageResource(gameRules.getRule(GameRules.DISC2));
         player2.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
                 mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.player2));
-        player2.turnIndicator.setVisibility(gameRules.getRule(GameRules.FIRST_TURN) == Player.PLAYER2 ? VISIBLE : INVISIBLE);
-
     }
 
     /**
@@ -121,12 +122,26 @@ public class BoardView extends RelativeLayout {
     }
 
     /**
+     * Reset boar for new game
+     */
+    public void resetBoard() {
+        //clear board cells
+        for (ImageView[] cell : cells) {
+            for (ImageView imageView : cell) {
+                imageView.setImageResource(android.R.color.transparent);
+            }
+        }
+        togglePlayer(gameRules.getRule(GameRules.FIRST_TURN));
+        showWinStatus(BoardLogic.Outcome.NOTHING);
+    }
+
+    /**
      * Drop a disc of the current player at available row of selected column
      *
      * @param col
      * @param row
      */
-    public void dropDisc(int col, int row, int playerTurn) {
+    public void dropDisc(int col, int row, final int playerTurn) {
         final ImageView cell = cells[row][col];
         float move = -(cell.getHeight() * row + cell.getHeight() + 15);
         cell.setY(move);
@@ -145,4 +160,27 @@ public class BoardView extends RelativeLayout {
             return -1;
         return col;
     }
+
+    /**
+     * toggle player indicator
+     *
+     * @param playerTurn
+     */
+    public void togglePlayer(int playerTurn) {
+        player1.turnIndicator.setVisibility(playerTurn == Player.PLAYER1 ? VISIBLE : INVISIBLE);
+        player2.turnIndicator.setVisibility(playerTurn == Player.PLAYER2 ? VISIBLE : INVISIBLE);
+    }
+
+    /**
+     * Update UI with winning status
+     *
+     * @param outcome
+     */
+    public void showWinStatus(BoardLogic.Outcome outcome) {
+        winnerView.setVisibility(outcome == BoardLogic.Outcome.NOTHING ? INVISIBLE : VISIBLE);
+        winnerView.setText(outcome.name());
+    }
+
+
+
 }

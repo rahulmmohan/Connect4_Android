@@ -13,9 +13,10 @@ public class BoardLogic {
     public enum Outcome {
         NOTHING, DRAW, PLAYER1_WINS, PLAYER2_WINS;
     }
-
+    /** flag to mark draw */
     private boolean draw;
 
+    /** Reference to player win */
     private int cellValue;
 
     /**
@@ -45,38 +46,27 @@ public class BoardLogic {
 
     }
 
-    public Outcome check() {
+    public Outcome checkWin() {
         draw = true;
         cellValue = 0;
-        if(horizontalCheck() || verticalCheck() ||
-                ascendingDiagonalCheck() || descendingDiagonalCheck()){
-            return cellValue == Player.PLAYER1?Outcome.PLAYER1_WINS:Outcome.PLAYER2_WINS;
+        if (horizontalCheck() || verticalCheck() ||
+                ascendingDiagonalCheck() || descendingDiagonalCheck()) {
+            return cellValue == Player.PLAYER1 ? Outcome.PLAYER1_WINS : Outcome.PLAYER2_WINS;
         }
         // nobody won, return draw if it is, nothing if it's not
         return draw ? Outcome.DRAW : Outcome.NOTHING;
     }
 
-    private boolean descendingDiagonalCheck() {
-        // descendingDiagonalCheck
-        for (int i = 3; i < numCols; i++) {
-            for (int j = 3; j < numRows; j++) {
-                cellValue = grid[i][j];
-                if (grid[i][j] == grid[i - 1][j - 1] && grid[i - 1][j - 1] == grid[i - 2][j - 2]
-                        && grid[i - 2][j - 2] ==  grid[i - 3][j - 3])
-                    return true;
-            }
-        }
-        return false;
-    }
 
-    private boolean ascendingDiagonalCheck() {
-        // ascendingDiagonalCheck
-        for (int i = 3; i < numCols; i++) {
-            for (int j = 0; j < numRows - 3; j++) {
+    private boolean horizontalCheck() {
+        // horizontalCheck
+        for (int j = 0; j < numRows - 3; j++) {
+            for (int i = 0; i < numCols; i++) {
                 cellValue = grid[i][j];
-                if (grid[i][j] == grid[i - 1][j + 1] && grid[i - 1][j + 1] == grid[i - 2][j + 2]
-                        && grid[i - 2][j + 2] ==  grid[i - 3][j + 3])
+                if (cellValue == 0) draw = false;
+                if (cellValue != 0 && grid[i][j + 1] == cellValue && grid[i][j + 2] == cellValue && grid[i][j + 3] == cellValue) {
                     return true;
+                }
             }
         }
         return false;
@@ -87,8 +77,8 @@ public class BoardLogic {
         for (int i = 0; i < numCols - 3; i++) {
             for (int j = 0; j < this.numRows; j++) {
                 cellValue = grid[i][j];
-                if (grid[i][j] == grid[i + 1][j] && grid[i + 1][j] == grid[i + 2][j]
-                        && grid[i + 2][j] == grid[i + 3][j]) {
+                if (cellValue == 0) draw = false;
+                if (cellValue != 0 && grid[i + 1][j] == cellValue && grid[i + 2][j] == cellValue && grid[i + 3][j] == cellValue) {
                     return true;
                 }
             }
@@ -96,19 +86,30 @@ public class BoardLogic {
         return false;
     }
 
-    private boolean horizontalCheck() {
-        // horizontalCheck
-        for (int j = 0; j < numRows - 3; j++) {
-            for (int i = 0; i < numCols; i++) {
+    private boolean ascendingDiagonalCheck() {
+        // ascendingDiagonalCheck
+        for (int i = 3; i < numCols; i++) {
+            for (int j = 0; j < numRows - 3; j++) {
                 cellValue = grid[i][j];
-                if (grid[i][j] == grid[i][j + 1] && grid[i][j + 1] == grid[i][j + 2]
-                        && grid[i][j + 2] == grid[i][j + 3]) {
+                if (cellValue == 0) draw = false;
+                if (cellValue != 0 && grid[i - 1][j + 1] == cellValue && grid[i - 2][j + 2] == cellValue && grid[i - 3][j + 3] == cellValue)
                     return true;
-                }
             }
         }
         return false;
     }
 
+    private boolean descendingDiagonalCheck() {
+        // descendingDiagonalCheck
+        for (int i = 3; i < numCols; i++) {
+            for (int j = 3; j < numRows; j++) {
+                cellValue = grid[i][j];
+                if (cellValue == 0) draw = false;
+                if (cellValue != 0 && grid[i - 1][j - 1] == cellValue && grid[i - 2][j - 2] == cellValue && grid[i - 3][j - 3] == cellValue)
+                    return true;
+            }
+        }
+        return false;
+    }
 
 }
