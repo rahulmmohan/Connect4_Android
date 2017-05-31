@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Connect4_Android.iml" filepath="$PROJECT_DIR$/Connect4_Android.iml" />
-      <module fileurl="file://E:\RD\Connect4_Android\Connect4_Android.iml" filepath="E:\RD\Connect4_Android\Connect4_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\RD\Connect4_Android\app\app.iml" filepath="E:\RD\Connect4_Android\app\app.iml" />
     </modules>
   </component>
 </project>

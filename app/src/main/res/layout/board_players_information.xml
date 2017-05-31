@@ -21,24 +21,26 @@
 
             <ImageView
                 android:id="@+id/player1_disc"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:src="@drawable/red_disc" />
 
             <TextView
-                android:gravity="center"
+                android:layout_marginBottom="5dp"
                 android:id="@+id/player1_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Turn:"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/player1_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="7dp"
-                android:background="#fff" />
+                android:layout_height="5dp"
+                android:background="@color/white" />
 
         </LinearLayout>
 
@@ -52,23 +54,25 @@
 
             <ImageView
                 android:id="@+id/player2_disc"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:src="@drawable/yellow_disc" />
 
             <TextView
-                android:gravity="center"
+                android:layout_marginBottom="5dp"
                 android:id="@+id/player2_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Turn:"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/player2_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="7dp"
+                android:layout_height="5dp"
                 android:background="#fff" />
 
         </LinearLayout>
@@ -76,16 +80,15 @@
     </RelativeLayout>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/winner_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/turn_indicator"
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="Winner!"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </LinearLayout>
