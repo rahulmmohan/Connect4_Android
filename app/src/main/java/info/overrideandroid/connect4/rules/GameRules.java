@@ -1,5 +1,7 @@
 package info.overrideandroid.connect4.rules;
 
+import android.os.Bundle;
+
 import info.overrideandroid.connect4.R;
 
 /**
@@ -26,9 +28,9 @@ public class GameRules {
      */
     public class Level extends Rule {
 
-        public static final int EASY = R.string.level_0;
-        public static final int NORMAL = R.string.level_1;
-        public static final int HARD = R.string.level_2;
+        public static final int EASY = 0;
+        public static final int NORMAL = 1;
+        public static final int HARD = 2;
 
         Level() {
             super(new int[]{EASY, NORMAL, HARD});
@@ -108,5 +110,21 @@ public class GameRules {
         rules[rule].setId(value);
     }
 
+    public Bundle exportTo(Bundle bundle) {
+        int[] bundleRules = new int[rules.length];
+        for(int i = 0; i < rules.length; ++i) {
+            bundleRules[i] = rules[i].getSelectedId();
+        }
+
+        bundle.putIntArray("rules", bundleRules);
+        return bundle;
+    }
+
+    public void importFrom(Bundle bundle) {
+        int[] bundleRules = bundle.getIntArray("rules");
+        for(int i = 0; i < bundleRules.length; ++i) {
+            rules[i].setId(bundleRules[i]);
+        }
+    }
 
 }

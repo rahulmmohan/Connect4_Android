@@ -1,10 +1,16 @@
 package info.overrideandroid.connect4.board;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import info.overrideandroid.connect4.activity.GamePlayActivity;
+import info.overrideandroid.connect4.ai.AiLogic;
+import info.overrideandroid.connect4.ai.EasyAiLogic;
+import info.overrideandroid.connect4.ai.HardAiLogic;
+import info.overrideandroid.connect4.ai.NormalAiLogic;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
@@ -43,6 +49,11 @@ public class BoardController implements View.OnTouchListener {
     private final BoardLogic logic = new BoardLogic(grid);
 
     /**
+     * AI logic
+     */
+    private  AiLogic aiLogic;
+
+    /**
      * current status
      */
     private Outcome outcome = Outcome.NOTHING;
@@ -57,6 +68,9 @@ public class BoardController implements View.OnTouchListener {
      */
     private int playerTurn;
 
+    /** main thread handler */
+    private final Handler handler = new Handler();
+
     private Context mContext;
     private BoardView mBoardView;
 
@@ -64,6 +78,7 @@ public class BoardController implements View.OnTouchListener {
      * Game rules
      */
     private GameRules gameRules;
+    private boolean aiTurn;
 
     public BoardController(Context context, BoardView boardView, GameRules gameRules) {
         this.mContext = context;
@@ -83,6 +98,24 @@ public class BoardController implements View.OnTouchListener {
         finished = false;
         outcome = Outcome.NOTHING;
 
+        // create AI if needed
+        if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
+            switch (gameRules.getRule(GameRules.LEVEL)) {
+                case GameRules.Level.EASY:
+                    aiLogic = new EasyAiLogic(grid);
+                    break;
+                case GameRules.Level.NORMAL:
+                    aiLogic = new NormalAiLogic(grid);
+                    break;
+                case GameRules.Level.HARD:
+                    aiLogic = new HardAiLogic(grid);
+                    break;
+                default:
+                    aiLogic = null;
+                    break;
+            }
+        } else aiLogic = null;
+
         // null the grid and free counter for every column
         for (int i = 0; i < COLS; ++i) {
             for (int j = 0; j < ROWS; ++j) {
@@ -90,17 +123,24 @@ public class BoardController implements View.OnTouchListener {
             }
             free[i] = ROWS;
         }
+
+        // if it is a computer turn, go ahead with it
+        if(playerTurn == GameRules.FirstTurn.PLAYER2 && aiLogic != null) aiTurn();
     }
 
-    public void startGame() {
-
+    private void aiTurn() {
+        if(finished) return;
+        aiTurn = true;
+        handler.postDelayed(ai, Constants.AI_DELAY);
     }
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP: {
+                if(finished || aiTurn ) return true;
                 int col = mBoardView.colAtX(event.getX());
                 selectColumn(col);
             }
@@ -124,10 +164,10 @@ public class BoardController implements View.OnTouchListener {
         // decrement free space in this column
         free[column]--;
 
-        // put token
+        // put disc
         mBoardView.dropDisc(column, free[column], playerTurn);
 
-        // set who put the token
+        // set who put the disc
         grid[column][free[column]] = playerTurn;
 
         // switch player
@@ -136,9 +176,9 @@ public class BoardController implements View.OnTouchListener {
 
         // check if someone has won
         checkForWin();
-
+        aiTurn = false;
         // AI move if needed
-        //if(playerTurn == Player.PLAYER2 && ai != null) aiTurn();
+        if(playerTurn == Player.PLAYER2 && aiLogic != null) aiTurn();
     }
 
     private void checkForWin() {
@@ -147,13 +187,13 @@ public class BoardController implements View.OnTouchListener {
         if (outcome != Outcome.NOTHING) {
             finished = true;
             mBoardView.showWinStatus(outcome);
-        }
-        else {
+        } else {
             mBoardView.togglePlayer(playerTurn);
         }
     }
 
     public void exitGame() {
+        ((GamePlayActivity) mContext).finish();
     }
 
     public void restartGame() {
@@ -161,4 +201,15 @@ public class BoardController implements View.OnTouchListener {
         mBoardView.resetBoard();
 
     }
+
+    /**
+     * Runs AI after a delay
+     */
+    private Runnable ai = new Runnable(){
+        @Override
+        public void run() {
+            selectColumn(aiLogic.run());
+        }
+    };
+
 }

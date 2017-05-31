@@ -5,6 +5,7 @@
     android:clipChildren="false">
 
     <include
+
         android:id="@+id/player_info"
         layout="@layout/board_players_information" />
 

@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/gameView"
-    tools:context="info.overrideandroid.connect4.activity.GameActivity">
+    tools:context="info.overrideandroid.connect4.activity.GamePlayActivity">
 
 </info.overrideandroid.connect4.board.BoardView>

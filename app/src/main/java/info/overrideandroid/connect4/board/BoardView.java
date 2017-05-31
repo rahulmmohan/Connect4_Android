@@ -94,8 +94,7 @@ public class BoardView extends RelativeLayout {
      */
     public void setPlayer1() {
         player1.disc.setImageResource(gameRules.getRule(GameRules.DISC));
-        player1.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
-                mContext.getString(R.string.you) : mContext.getString(R.string.player1));
+        player1.name.setText(mContext.getString(R.string.you));
     }
 
     /**
@@ -104,7 +103,7 @@ public class BoardView extends RelativeLayout {
     public void setPlayer2() {
         player2.disc.setImageResource(gameRules.getRule(GameRules.DISC2));
         player2.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
-                mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.player2));
+                mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.opponent_player));
     }
 
     /**
@@ -160,8 +159,10 @@ public class BoardView extends RelativeLayout {
     public int colAtX(float x) {
         float colWidth = cells[0][0].getWidth();
         int col = (int) x / (int) colWidth;
-        if (col < 0 || col > 6)
-            return -1;
+        if (col < 0)
+            return 0;
+        if (col > 6)
+            return 6;
         return col;
     }
 
@@ -181,10 +182,29 @@ public class BoardView extends RelativeLayout {
      * @param outcome
      */
     public void showWinStatus(BoardLogic.Outcome outcome) {
-        winnerView.setVisibility(outcome == BoardLogic.Outcome.NOTHING ? INVISIBLE : VISIBLE);
-        winnerView.setText(outcome.name());
-    }
 
+        if(outcome != BoardLogic.Outcome.NOTHING) {
+            winnerView.setVisibility(VISIBLE);
+            player1.turnIndicator.setVisibility(INVISIBLE);
+            player2.turnIndicator.setVisibility(INVISIBLE);
+            switch (outcome) {
+                case DRAW:
+                    winnerView.setText(mContext.getString(R.string.draw));
+                    break;
+                case PLAYER1_WINS:
+                    winnerView.setText(mContext.getString(R.string.you_win));
+                    break;
+                case PLAYER2_WINS:
+                    winnerView.setText(gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI ?
+                            mContext.getString(R.string.you_lose) : mContext.getString(R.string.friend_win));
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            winnerView.setVisibility(INVISIBLE);
+        }
+    }
 
 
 }

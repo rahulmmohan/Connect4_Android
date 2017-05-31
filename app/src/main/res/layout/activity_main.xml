@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<info.overrideandroid.connect4.view.MenuView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/menuView"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context="info.overrideandroid.connect4.activity.MainActivity">
-
+    tools:context="info.overrideandroid.connect4.activity.GameMenuActivity">
+<ImageView
+    android:layout_marginTop="20dp"
+    android:id="@+id/logo"
+    android:layout_centerHorizontal="true"
+    android:layout_width="200dp"
+    android:layout_height="50dp"
+    android:src="@drawable/connect_logo"/>
     <LinearLayout
+        android:layout_below="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/play"
@@ -26,19 +34,20 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/play_with"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/activity_vertical_margin">
 
             <RadioButton
-
+                android:id="@+id/play_with_ai"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_left_corner"
-                android:checked="true"
                 android:text="AI" />
 
             <RadioButton
+                android:id="@+id/play_with_friend"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_right_corner"
                 android:text="FRIEND" />
@@ -52,20 +61,22 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/player1_disc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/activity_vertical_margin">
+            >
 
             <RadioButton
+                android:id="@+id/disc_red"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/radio_btn_selector_red"
-                android:button="@null"
-                android:checked="true" />
+                android:button="@null" />
 
             <RadioButton
+                android:id="@+id/disc_yellow"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
@@ -81,30 +92,31 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/first_turn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/activity_vertical_margin">
 
             <RadioButton
+                android:id="@+id/first_turn_player1"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_left_corner"
-                android:checked="true"
                 android:text="YOU" />
 
             <RadioButton
+                android:id="@+id/first_turn_player2"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_right_corner"
                 android:text="AI" />
         </RadioGroup>
 
         <LinearLayout
+            android:id="@+id/level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,6 +126,7 @@
                 android:textStyle="bold" />
 
             <SeekBar
+                android:id="@+id/difficulty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="2"
@@ -128,32 +141,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Easy" />
+                    android:text="Easy"
+                    android:textSize="@dimen/seekbar_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Normal" />
+                    android:text="Normal"
+                    android:textSize="@dimen/seekbar_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Hard" />
+                    android:text="Hard"
+                    android:textSize="@dimen/seekbar_text_size" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:text="@string/play"
         android:id="@+id/play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/colorPrimary"
+        android:text="@string/play"
         android:textColor="@color/white"
         android:textSize="23sp"
         android:textStyle="bold" />
-</RelativeLayout>
+</info.overrideandroid.connect4.view.MenuView>
