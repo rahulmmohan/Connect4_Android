@@ -52,8 +52,8 @@ public class GameRules {
      * Color disc settings
      */
     public class Disc extends Rule {
-        public static final int RED = R.drawable.red;
-        public static final int YELLOW = R.drawable.yellow;
+        public static final int RED = R.drawable.red_disc;
+        public static final int YELLOW = R.drawable.yellow_disc;
 
 
         Disc() {
