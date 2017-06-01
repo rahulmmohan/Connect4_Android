@@ -1,6 +1,7 @@
 package info.overrideandroid.connect4.ai;
 
 import info.overrideandroid.connect4.rules.Player;
+import info.overrideandroid.connect4.rules.Slot;
 
 /**
  * Hard AI. Anticipates a move from above, doesn't miss the gaps, starts in
@@ -11,7 +12,7 @@ import info.overrideandroid.connect4.rules.Player;
 
 public class HardAiLogic extends NormalAiLogic {
 
-    public HardAiLogic(int[][] grid) {
+    public HardAiLogic(Slot[][] grid) {
         super(grid);
     }
 
@@ -21,7 +22,7 @@ public class HardAiLogic extends NormalAiLogic {
         int alpha = 0;
 
         for (int i = 0; i < grid.length; ++i) {
-            if (grid[i][0] != 0) continue;
+            if (grid[i][0].player != 0) continue;
             int j = findRow(i);
             int beta = analyse(i, j);
             if (beta > alpha) {
@@ -30,7 +31,7 @@ public class HardAiLogic extends NormalAiLogic {
             }
         }
         // lets be sure the move is valid
-        return grid[col][0] == 0 ? col : super.run();
+        return grid[col][0].player == 0 ? col : super.run();
     }
 
     private int analyse(int x, int y) {

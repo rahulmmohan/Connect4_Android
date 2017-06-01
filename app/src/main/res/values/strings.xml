@@ -7,7 +7,7 @@
     <string name="level_2">Hard</string>
 
     <!-- game opponent modes -->
-    <string name="opponent_ai">AI</string>
+    <string name="opponent_ai">COMPUTER</string>
     <string name="opponent_player">FRIEND</string>
 
     <string name="you">You</string>
@@ -17,7 +17,7 @@
     <string name="play">play</string>
 
     <!-- game win modes -->
-    <string name="you_win">YOU WINS</string>
+    <string name="you_win">YOU WIN</string>
     <string name="you_lose">YOU LOSE</string>
     <string name="friend_win">FRIEND WINS</string>
     <string name="draw">DRAW</string>

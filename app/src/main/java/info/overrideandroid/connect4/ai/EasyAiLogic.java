@@ -1,6 +1,7 @@
 package info.overrideandroid.connect4.ai;
 
 import info.overrideandroid.connect4.rules.Player;
+import info.overrideandroid.connect4.rules.Slot;
 
 /**
  * Quite basic AI. Tries to add a new chip to the longest combination,
@@ -25,7 +26,7 @@ public class EasyAiLogic extends AiLogic {
     protected static final int Y_T = -1;
     protected static final int Y_B = 1;
 
-    public EasyAiLogic(int[][] grid) {
+    public EasyAiLogic(Slot[][] grid) {
         super(grid);
         cols = grid.length;
         rows = grid[0].length;
@@ -37,7 +38,7 @@ public class EasyAiLogic extends AiLogic {
         int com = -1;
 
         for(int i = 0; i < grid.length; ++i) {
-            if(grid[i][0] != 0) continue;
+            if(grid[i][0].player != 0) continue;
             int j = findRow(i);
             int a = analyse(i, j, 0); // analyse every possible column
             if(a > com) {
@@ -56,7 +57,7 @@ public class EasyAiLogic extends AiLogic {
      */
     protected int findRow(int col) {
         int row = 0;
-        while(row < rows - 1 && grid[col][row + Y_B] == 0) row++;
+        while(row < rows - 1 && grid[col][row + Y_B].player == 0) row++;
         return row;
     }
 
@@ -102,7 +103,7 @@ public class EasyAiLogic extends AiLogic {
     protected int combination(int x, int y, int i, int j, int p) {
         if(x < 0 || x >= cols) return 0;
         if(y >= rows || y < 0) return 0;
-        if(grid[x][y] == p) {
+        if(grid[x][y].player == p) {
             return combination(x + i, y + j, i, j, p) + 1;
         }
         return 0;

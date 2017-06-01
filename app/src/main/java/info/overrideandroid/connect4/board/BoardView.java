@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
@@ -56,6 +58,9 @@ public class BoardView extends RelativeLayout {
 
     private Context mContext;
 
+    public ImageView[][] getCells() {
+        return cells;
+    }
 
     public BoardView(Context context) {
         super(context);
@@ -133,7 +138,7 @@ public class BoardView extends RelativeLayout {
             }
         }
         togglePlayer(gameRules.getRule(GameRules.FIRST_TURN));
-        showWinStatus(BoardLogic.Outcome.NOTHING);
+        showWinStatus(BoardLogic.Outcome.NOTHING, null);
     }
 
     /**
@@ -180,10 +185,12 @@ public class BoardView extends RelativeLayout {
      * Update UI with winning status
      *
      * @param outcome
+     * @param winDiscs
      */
-    public void showWinStatus(BoardLogic.Outcome outcome) {
+    public void showWinStatus(BoardLogic.Outcome outcome, ArrayList<ImageView> winDiscs) {
 
         if(outcome != BoardLogic.Outcome.NOTHING) {
+
             winnerView.setVisibility(VISIBLE);
             player1.turnIndicator.setVisibility(INVISIBLE);
             player2.turnIndicator.setVisibility(INVISIBLE);
@@ -193,10 +200,16 @@ public class BoardView extends RelativeLayout {
                     break;
                 case PLAYER1_WINS:
                     winnerView.setText(mContext.getString(R.string.you_win));
+                    for (ImageView winDisc : winDiscs) {
+                        winDisc.setImageResource(R.drawable.cell_frame);
+                    }
                     break;
                 case PLAYER2_WINS:
                     winnerView.setText(gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI ?
                             mContext.getString(R.string.you_lose) : mContext.getString(R.string.friend_win));
+                    for (ImageView winDisc : winDiscs) {
+                        winDisc.setImageResource(R.drawable.cell_frame);
+                    }
                     break;
                 default:
                     break;

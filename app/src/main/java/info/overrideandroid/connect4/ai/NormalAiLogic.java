@@ -1,6 +1,7 @@
 package info.overrideandroid.connect4.ai;
 
 import info.overrideandroid.connect4.rules.Player;
+import info.overrideandroid.connect4.rules.Slot;
 
 /**
  * Slightly modified easy AI, does the same thing for the opponent to
@@ -10,7 +11,7 @@ import info.overrideandroid.connect4.rules.Player;
 
 public class NormalAiLogic extends EasyAiLogic {
 
-    public NormalAiLogic(int[][] grid) {
+    public NormalAiLogic(Slot[][] grid) {
         super(grid);
     }
 

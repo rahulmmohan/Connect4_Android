@@ -51,13 +51,13 @@
                 android:id="@+id/play_with_ai"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_left_corner"
-                android:text="AI" />
+                android:text="@string/opponent_ai" />
 
             <RadioButton
                 android:id="@+id/play_with_friend"
                 style="@style/RadioButtonStyle"
                 android:background="@drawable/radio_btn_selector_right_corner"
-                android:text="FRIEND" />
+                android:text="@string/opponent_player" />
         </RadioGroup>
 
         <TextView

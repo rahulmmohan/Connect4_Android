@@ -82,7 +82,7 @@ public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekB
     private GameRules getDefaultGameRules() {
         gameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
         gameRules.setRule(GameRules.LEVEL, GameRules.Level.NORMAL);
-        gameRules.setRule(GameRules.OPPONENT, Opponent.PLAYER);
+        gameRules.setRule(GameRules.OPPONENT, Opponent.AI);
         gameRules.setRule(GameRules.DISC, GameRules.Disc.RED);
         gameRules.setRule(GameRules.DISC2, GameRules.Disc.YELLOW);
         return gameRules;

@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiLogic;
@@ -14,6 +17,7 @@ import info.overrideandroid.connect4.ai.NormalAiLogic;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
+import info.overrideandroid.connect4.rules.Slot;
 import info.overrideandroid.connect4.utils.Constants;
 
 /**
@@ -36,7 +40,7 @@ public class BoardController implements View.OnTouchListener {
     /**
      * grid, contains 0 for empty cell or player ID
      */
-    int grid[][] = new int[COLS][ROWS];
+    Slot grid[][] = new Slot[COLS][ROWS];
 
     /**
      * free cells in every column
@@ -119,7 +123,7 @@ public class BoardController implements View.OnTouchListener {
         // null the grid and free counter for every column
         for (int i = 0; i < COLS; ++i) {
             for (int j = 0; j < ROWS; ++j) {
-                grid[i][j] = 0;
+                grid[i][j] = new Slot(i,j);
             }
             free[i] = ROWS;
         }
@@ -168,7 +172,7 @@ public class BoardController implements View.OnTouchListener {
         mBoardView.dropDisc(column, free[column], playerTurn);
 
         // set who put the disc
-        grid[column][free[column]] = playerTurn;
+        grid[column][free[column]].player = playerTurn;
 
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
@@ -186,7 +190,9 @@ public class BoardController implements View.OnTouchListener {
 
         if (outcome != Outcome.NOTHING) {
             finished = true;
-            mBoardView.showWinStatus(outcome);
+            ArrayList<ImageView> winDiscs = logic.getWinDiscs(mBoardView.getCells());
+            mBoardView.showWinStatus(outcome,winDiscs);
+
         } else {
             mBoardView.togglePlayer(playerTurn);
         }
@@ -208,6 +214,11 @@ public class BoardController implements View.OnTouchListener {
     private Runnable ai = new Runnable(){
         @Override
         public void run() {
+            try {
+                Thread.sleep(Constants.AI_DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             selectColumn(aiLogic.run());
         }
     };
