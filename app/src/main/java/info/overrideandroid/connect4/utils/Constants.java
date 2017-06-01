@@ -13,4 +13,6 @@ public class Constants {
 
     /** delay between toggle */
     public static final int TOGGLE_DELAY = 800; // ms
+
+    public static final int SPLASH_TIME_OUT = 3000;
 }
