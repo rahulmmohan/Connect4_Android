@@ -28,6 +28,7 @@ public class BoardView extends RelativeLayout {
 
 
     private GameRules gameRules;
+    private BoardController listener;
 
     /**
      * view holder for player information
@@ -86,8 +87,9 @@ public class BoardView extends RelativeLayout {
         winnerView = (TextView) findViewById(R.id.winner_text);
     }
 
-    public void initialize(GameRules gameRules) {
+    public void initialize(BoardController boardController, GameRules gameRules) {
         this.gameRules = gameRules;
+        this.listener =boardController;
         setPlayer1();
         setPlayer2();
         togglePlayer(gameRules.getRule(GameRules.FIRST_TURN));
@@ -122,6 +124,7 @@ public class BoardView extends RelativeLayout {
             for (int c = 0; c < COLS; c++) {
                 ImageView imageView = (ImageView) row.getChildAt(c);
                 imageView.setImageResource(android.R.color.transparent);
+                imageView.setOnClickListener(listener);
                 cells[r][c] = imageView;
             }
         }
@@ -153,12 +156,7 @@ public class BoardView extends RelativeLayout {
         cell.setY(move);
         cell.setImageResource(playerTurn == Player.PLAYER1 ?
                 gameRules.getRule(GameRules.DISC) : gameRules.getRule(GameRules.DISC2));
-        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, Math.abs(move));
-        anim.setDuration(500);
-        anim.setFillAfter(true);
-        anim.setInterpolator(new AccelerateInterpolator());
-        anim.setInterpolator(new BounceInterpolator());
-        cell.startAnimation(anim);
+        cell.animate().translationY(0).setInterpolator(new BounceInterpolator()).start();
     }
 
     public int colAtX(float x) {

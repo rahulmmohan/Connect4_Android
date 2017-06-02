@@ -23,7 +23,7 @@ import info.overrideandroid.connect4.utils.Constants;
  * Created by Rahul on 30/05/17.
  */
 
-public class BoardController implements View.OnTouchListener {
+public class BoardController implements View.OnClickListener {
 
     private static final String TAG = BoardController.class.getName();
     /**
@@ -85,6 +85,7 @@ public class BoardController implements View.OnTouchListener {
     private GameRules gameRules;
     private boolean aiTurn;
     private AiLogicNew aiLogicNew;
+    private Board board;
 
     public BoardController(Context context, BoardView boardView, GameRules gameRules) {
         this.mContext = context;
@@ -92,8 +93,7 @@ public class BoardController implements View.OnTouchListener {
         this.mBoardView = boardView;
         initialize();
         if (mBoardView != null) {
-            mBoardView.initialize(gameRules);
-            mBoardView.setOnTouchListener(this);
+            mBoardView.initialize(this,gameRules);
         }
     }
 
@@ -106,7 +106,7 @@ public class BoardController implements View.OnTouchListener {
 
         // create AI if needed
         if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            Board board = new Board(grid, logic);
+            board = new Board(grid, logic);
             aiLogicNew = new AiLogicNew(board);
             switch (gameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
@@ -139,22 +139,15 @@ public class BoardController implements View.OnTouchListener {
     private void aiTurn() {
         if (finished) return;
         aiTurn = true;
-        handler.postDelayed(ai, Constants.AI_DELAY);
-    }
-
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_POINTER_UP:
-            case MotionEvent.ACTION_UP: {
-                if (finished || aiTurn) return true;
-                int col = mBoardView.colAtX(event.getX());
-                selectColumn(col);
+        ((GamePlayActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                selectColumn(aiLogicNew.getAIMove());
             }
-        }
-        return true;
+        });
+       // handler.postDelayed(ai, Constants.AI_DELAY);
     }
+
 
     /**
      * drop disc into a column
@@ -177,7 +170,6 @@ public class BoardController implements View.OnTouchListener {
 
         // set who put the disc
         grid[free[column]][column].player = playerTurn;
-
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
                 ? Player.PLAYER2 : Player.PLAYER1;
@@ -218,9 +210,15 @@ public class BoardController implements View.OnTouchListener {
     private Runnable ai = new Runnable() {
         @Override
         public void run() {
-            selectColumn(aiLogicNew.getAIMove());
+
         }
     };
 
 
+    @Override
+    public void onClick(View view) {
+        if (finished || aiTurn) return;
+        int col = mBoardView.colAtX(view.getX());
+        selectColumn(col);
+    }
 }

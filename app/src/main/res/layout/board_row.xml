@@ -7,6 +7,7 @@
     android:clipChildren="false">
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -14,12 +15,14 @@
         android:src="@drawable/red_disc" />
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true" />
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -27,6 +30,7 @@
         android:src="@drawable/yellow_disc" />
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -34,6 +38,7 @@
         android:src="@drawable/red_disc" />
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -41,6 +46,7 @@
         android:src="@drawable/yellow_disc" />
 
     <ImageView
+        android:background="?attr/selectableItemBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -48,6 +54,7 @@
         android:src="@drawable/yellow_disc" />
 
     <ImageView
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"

@@ -43,13 +43,4 @@ public class Board {
                 }
             }
         }
-
-        //Printing the board
-        public void displayBoard() {
-            for (int i = 0; i <= 5; ++i) {
-                for (int j = 0; j <= 6; ++j) {
-                    Log.d("jn",board[i][j].player + " ");
-                }
-            }
-        }
     }
