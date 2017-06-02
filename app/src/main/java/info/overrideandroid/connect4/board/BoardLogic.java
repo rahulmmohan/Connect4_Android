@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import info.overrideandroid.connect4.rules.Player;
-import info.overrideandroid.connect4.rules.Slot;
 
 /**
  * Created by Rahul on 30/05/17.
@@ -16,7 +15,7 @@ public class BoardLogic {
      * Possible outcomes
      */
     public enum Outcome {
-        NOTHING, DRAW, PLAYER1_WINS, PLAYER2_WINS;
+        NOTHING, DRAW, PLAYER1_WINS, PLAYER2_WINS
     }
 
     /**
@@ -32,7 +31,7 @@ public class BoardLogic {
     /**
      * Reference to a main grid
      */
-    private final Slot[][] grid;
+    private final int[][] grid;
 
     /**
      * number of columns in the grid
@@ -52,18 +51,15 @@ public class BoardLogic {
     /**
      * winner direction
      */
-    int WIN_X = 0, WIN_Y = 0;
-
-    /**
-     * player win starting index
-     */
+    private int WIN_X = 0;
+    private int WIN_Y = 0;
 
     /**
      * Initialise members
      *
      * @param _grid
      */
-    public BoardLogic(Slot[][] _grid) {
+    public BoardLogic(int[][] _grid) {
         grid = _grid;
         numRows = _grid.length;
         numCols = _grid[0].length;
@@ -86,9 +82,9 @@ public class BoardLogic {
         // horizontalCheck
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols - 3; j++) {
-                cellValue = grid[i][j].player;
+                cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i][j + 1].player == cellValue && grid[i][j + 2].player == cellValue && grid[i][j + 3].player == cellValue) {
+                if (cellValue != 0 && grid[i][j + 1] == cellValue && grid[i][j + 2] == cellValue && grid[i][j + 3] == cellValue) {
                     p = i;
                     q = j;
                     WIN_X = 1;
@@ -104,9 +100,9 @@ public class BoardLogic {
         // verticalCheck
         for (int j = 0; j < numCols; j++) {
             for (int i = 0; i < numRows - 3; i++) {
-                cellValue = grid[i][j].player;
+                cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i + 1][j].player == cellValue && grid[i + 2][j].player == cellValue && grid[i + 3][j].player == cellValue) {
+                if (cellValue != 0 && grid[i + 1][j] == cellValue && grid[i + 2][j] == cellValue && grid[i + 3][j] == cellValue) {
                     p = i;
                     q = j;
                     WIN_X = 0;
@@ -117,25 +113,14 @@ public class BoardLogic {
         }
         return false;
     }
-    /**
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     * {0,0,0,0,0,0}
-     *
-     * @param b
-     * @return
-     */
+
     private boolean ascendingDiagonalCheck() {
         // ascendingDiagonalCheck
         for (int i = 3; i < numRows; i++) {
             for (int j = 0; j < numCols - 3; j++) {
-                cellValue = grid[i][j].player;
+                cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i - 1][j + 1].player == cellValue && grid[i - 2][j + 2].player == cellValue && grid[i - 3][j + 3].player == cellValue) {
+                if (cellValue != 0 && grid[i - 1][j + 1] == cellValue && grid[i - 2][j + 2] == cellValue && grid[i - 3][j + 3] == cellValue) {
                     p = i;
                     q = j;
                     WIN_X = 1;
@@ -151,9 +136,9 @@ public class BoardLogic {
         // descendingDiagonalCheck
         for (int i = 3; i < numRows; i++) {
             for (int j = 3; j < numCols; j++) {
-                cellValue = grid[i][j].player;
+                cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i - 1][j - 1].player == cellValue && grid[i - 2][j - 2].player == cellValue && grid[i - 3][j - 3].player == cellValue) {
+                if (cellValue != 0 && grid[i - 1][j - 1] == cellValue && grid[i - 2][j - 2] == cellValue && grid[i - 3][j - 3] == cellValue) {
                     p = i;
                     q = j;
                     WIN_X = -1;

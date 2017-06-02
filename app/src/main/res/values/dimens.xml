@@ -4,5 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="option_title_size">20sp</dimen>
     <dimen name="seekbar_text_size">17sp</dimen>
-    <dimen name="app_title">60sp</dimen>
+    <dimen name="app_title">50sp</dimen>
 </resources>

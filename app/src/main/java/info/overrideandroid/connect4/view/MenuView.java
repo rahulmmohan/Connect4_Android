@@ -51,14 +51,14 @@ public class MenuView extends RelativeLayout {
 
         }
     }
-    public void setFirstTurn(int rule){
+    private void setFirstTurn(int rule){
         if(rule == FirstTurn.PLAYER1){
             ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player1);
         }else {
             ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player2);
         }
     }
-    public void setPLayer1Disc(int rule){
+    private void setPLayer1Disc(int rule){
         if(rule == Disc.RED){
             ((RadioGroup) findViewById(R.id.player1_disc)).check(R.id.disc_red);
         }else {

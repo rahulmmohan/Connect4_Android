@@ -14,8 +14,8 @@ import info.overrideandroid.connect4.rules.GameRules;
 
 public class GamePlayActivity extends AppCompatActivity {
 
-    BoardController gameController;
-    GameRules gameRules = new GameRules();
+    private BoardController gameController;
+    private final GameRules gameRules = new GameRules();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +28,6 @@ public class GamePlayActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
     }
 
-    private GameRules getGameRules() {
-        GameRules gameRules = new GameRules();
-        gameRules.setRule(GameRules.FIRST_TURN, GameRules.FirstTurn.PLAYER1);
-        gameRules.setRule(GameRules.LEVEL, GameRules.Level.EASY);
-        gameRules.setRule(GameRules.OPPONENT, GameRules.Opponent.PLAYER);
-        gameRules.setRule(GameRules.DISC, GameRules.Disc.YELLOW);
-        gameRules.setRule(GameRules.DISC2, GameRules.Disc.RED);
-        return gameRules;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -48,17 +38,7 @@ public class GamePlayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(R.string.back)
-                        .setCancelable(false)
-                        .setNegativeButton("No",null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                gameController.exitGame();
-                            }
-                        }).show();
+                exitPlay();
                 break;
             case R.id.restart:
                 new AlertDialog.Builder(this)
@@ -77,5 +57,24 @@ public class GamePlayActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void exitPlay() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.app_name))
+                .setMessage(R.string.back)
+                .setCancelable(false)
+                .setNegativeButton("No",null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gameController.exitGame();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitPlay();
     }
 }

@@ -11,8 +11,6 @@
     <string name="opponent_player">FRIEND</string>
 
     <string name="you">You</string>
-    <string name="player1">Player 1</string>
-    <string name="player2">Player 2</string>
     <string name="restart_game">restart Game</string>
     <string name="play">play</string>
 
@@ -23,4 +21,8 @@
     <string name="draw">DRAW</string>
     <string name="back">Back to menu?</string>
     <string name="reset_game">Reset game?</string>
+    <string name="play_with">PLAY WITH</string>
+    <string name="choose_your_color">CHOOSE YOUR COLOR</string>
+    <string name="first_turn">FIRST TURN</string>
+    <string name="difficulty">DIFFICULTY</string>
 </resources>

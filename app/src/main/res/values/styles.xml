@@ -11,6 +11,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/white</item> <!-- Whatever color you want-->
+    </style>
+
     <style name="RadioButtonStyle" parent="@android:style/Widget.CompoundButton">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>

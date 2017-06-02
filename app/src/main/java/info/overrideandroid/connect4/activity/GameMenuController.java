@@ -16,9 +16,9 @@ import info.overrideandroid.connect4.view.MenuView;
  */
 
 public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener {
-    private MenuView menuView;
-    private MenuControllerListener listener;
-    private GameRules gameRules = new GameRules();
+    private final MenuView menuView;
+    private final MenuControllerListener listener;
+    private final GameRules gameRules = new GameRules();
 
     public GameMenuController(MenuControllerListener listener, MenuView menuView) {
         this.menuView = menuView;

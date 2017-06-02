@@ -5,10 +5,10 @@ package info.overrideandroid.connect4.rules;
  * Created by Rahul on 30/05/17.
  */
 
-public abstract class Rule {
+abstract class Rule {
 
     /** list of all possibles IDs for a rule*/
-    public final int[] ruleIds;
+    private final int[] ruleIds;
 
     /** selected ID */
     private int selectedId = 0;

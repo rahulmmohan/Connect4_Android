@@ -2,7 +2,8 @@ package info.overrideandroid.connect4.ai;
 
 import android.util.Log;
 
-import java.util.Scanner;
+import info.overrideandroid.connect4.board.BoardLogic;
+import info.overrideandroid.connect4.rules.Player;
 
 /**
  * Created by Rahul on 01/06/17.
@@ -11,36 +12,60 @@ import java.util.Scanner;
 public class AiLogicNew {
 
     boolean firstMove = true;
-    private Board b;
+    private AiBoardMove b;
     private int nextMoveLocation = -1;
     private int maxDepth = 9;
 
-    public AiLogicNew(Board b) {
-        firstMove =true;
+    public AiLogicNew(AiBoardMove b) {
+        firstMove = true;
         this.b = b;
     }
 
+    /**
+     * set difficulty in maximum depth to analyse
+     *
+     * @param level
+     */
+    public void setDifficulty(int level) {
+        this.maxDepth = level;
+    }
+
+    /**
+     * run AI move
+     * @return
+     */
     public int getAIMove() {
+        /**
+         * place disc on center column if first move
+         */
         if (firstMove) {
             firstMove = false;
             return 3;
         }
         nextMoveLocation = -1;
-        minimax(0, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        minMax(0, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
         return nextMoveLocation;
     }
 
-    public int minimax(int depth, int turn, int alpha, int beta) {
+    /**
+     *
+     * @param depth
+     * @param turn
+     * @param alpha
+     * @param beta
+     * @return
+     */
+    public int minMax(int depth, int turn, int alpha, int beta) {
 
         if (beta <= alpha) {
             if (turn == 1) return Integer.MAX_VALUE;
             else return Integer.MIN_VALUE;
         }
-        int gameResult = gameResult(b);
+        BoardLogic.Outcome gameResult = b.boardLogic.checkWin();
 
-        if (gameResult == 1) return Integer.MAX_VALUE / 2;
-        else if (gameResult == 2) return Integer.MIN_VALUE / 2;
-        else if (gameResult == 0) return 0;
+        if (gameResult == BoardLogic.Outcome.PLAYER2_WINS) return Integer.MAX_VALUE / 2;
+        else if (gameResult == BoardLogic.Outcome.PLAYER1_WINS) return Integer.MIN_VALUE / 2;
+        else if (gameResult == BoardLogic.Outcome.DRAW) return 0;
 
         if (depth == maxDepth) return evaluateBoard(b);
 
@@ -53,11 +78,11 @@ public class AiLogicNew {
             if (!b.isLegalMove(j)) continue;
 
             if (turn == 1) {
-                b.placeMove(j, 1);
-                currentScore = minimax(depth + 1, 2, alpha, beta);
+                b.placeMove(j, Player.PLAYER2);
+                currentScore = minMax(depth + 1, 2, alpha, beta);
 
                 if (depth == 0) {
-                    Log.d("Score for location ",j+" = "+currentScore);
+                    Log.d("Score for location ", j + " = " + currentScore);
                     if (currentScore > maxScore) nextMoveLocation = j;
                     if (currentScore == Integer.MAX_VALUE / 2) {
                         b.undoMove(j);
@@ -69,8 +94,8 @@ public class AiLogicNew {
 
                 alpha = Math.max(currentScore, alpha);
             } else if (turn == 2) {
-                b.placeMove(j, 2);
-                currentScore = minimax(depth + 1, 1, alpha, beta);
+                b.placeMove(j, Player.PLAYER1);
+                currentScore = minMax(depth + 1, 1, alpha, beta);
                 minScore = Math.min(currentScore, minScore);
 
                 beta = Math.min(currentScore, beta);
@@ -82,7 +107,7 @@ public class AiLogicNew {
     }
 
     //Evaluate board favorableness for AI
-    public int evaluateBoard(Board b) {
+    public int evaluateBoard(AiBoardMove b) {
 
         int aiScore = 1;
         int score = 0;
@@ -91,12 +116,12 @@ public class AiLogicNew {
         for (int i = 5; i >= 0; --i) {
             for (int j = 0; j <= 6; ++j) {
 
-                if (b.board[i][j].player == 0 || b.board[i][j].player == 2) continue;
+                if (b.board[i][j] == 0 || b.board[i][j] == Player.PLAYER1) continue;
 
                 if (j <= 3) {
                     for (k = 1; k < 4; ++k) {
-                        if (b.board[i][j + k].player == 1) aiScore++;
-                        else if (b.board[i][j + k].player == 2) {
+                        if (b.board[i][j + k] == Player.PLAYER2) aiScore++;
+                        else if (b.board[i][j + k] == Player.PLAYER1) {
                             aiScore = 0;
                             blanks = 0;
                             break;
@@ -108,7 +133,7 @@ public class AiLogicNew {
                         for (int c = 1; c < 4; ++c) {
                             int column = j + c;
                             for (int m = i; m <= 5; m++) {
-                                if (b.board[m][column].player == 0) moreMoves++;
+                                if (b.board[m][column] == 0) moreMoves++;
                                 else break;
                             }
                         }
@@ -120,8 +145,8 @@ public class AiLogicNew {
 
                 if (i >= 3) {
                     for (k = 1; k < 4; ++k) {
-                        if (b.board[i - k][j].player == 1) aiScore++;
-                        else if (b.board[i - k][j].player == 2) {
+                        if (b.board[i - k][j] == Player.PLAYER2) aiScore++;
+                        else if (b.board[i - k][j] == Player.PLAYER1) {
                             aiScore = 0;
                             break;
                         }
@@ -131,7 +156,7 @@ public class AiLogicNew {
                     if (aiScore > 0) {
                         int column = j;
                         for (int m = i - k + 1; m <= i - 1; m++) {
-                            if (b.board[m][column].player == 0) moreMoves++;
+                            if (b.board[m][column] == 0) moreMoves++;
                             else break;
                         }
                     }
@@ -142,8 +167,8 @@ public class AiLogicNew {
 
                 if (j >= 3) {
                     for (k = 1; k < 4; ++k) {
-                        if (b.board[i][j - k].player == 1) aiScore++;
-                        else if (b.board[i][j - k].player == 2) {
+                        if (b.board[i][j - k] == Player.PLAYER2) aiScore++;
+                        else if (b.board[i][j - k] == Player.PLAYER1) {
                             aiScore = 0;
                             blanks = 0;
                             break;
@@ -154,7 +179,7 @@ public class AiLogicNew {
                         for (int c = 1; c < 4; ++c) {
                             int column = j - c;
                             for (int m = i; m <= 5; m++) {
-                                if (b.board[m][column].player == 0) moreMoves++;
+                                if (b.board[m][column] == 0) moreMoves++;
                                 else break;
                             }
                         }
@@ -166,8 +191,8 @@ public class AiLogicNew {
 
                 if (j <= 3 && i >= 3) {
                     for (k = 1; k < 4; ++k) {
-                        if (b.board[i - k][j + k].player == 1) aiScore++;
-                        else if (b.board[i - k][j + k].player == 2) {
+                        if (b.board[i - k][j + k] == Player.PLAYER2) aiScore++;
+                        else if (b.board[i - k][j + k] == Player.PLAYER1) {
                             aiScore = 0;
                             blanks = 0;
                             break;
@@ -178,8 +203,8 @@ public class AiLogicNew {
                         for (int c = 1; c < 4; ++c) {
                             int column = j + c, row = i - c;
                             for (int m = row; m <= 5; ++m) {
-                                if (b.board[m][column].player == 0) moreMoves++;
-                                else if (b.board[m][column].player == 1) ;
+                                if (b.board[m][column] == 0) moreMoves++;
+                                else if (b.board[m][column] == Player.PLAYER2) ;
                                 else break;
                             }
                         }
@@ -191,8 +216,8 @@ public class AiLogicNew {
 
                 if (i >= 3 && j >= 3) {
                     for (k = 1; k < 4; ++k) {
-                        if (b.board[i - k][j - k].player == 1) aiScore++;
-                        else if (b.board[i - k][j - k].player == 2) {
+                        if (b.board[i - k][j - k] == Player.PLAYER2) aiScore++;
+                        else if (b.board[i - k][j - k] == Player.PLAYER1) {
                             aiScore = 0;
                             blanks = 0;
                             break;
@@ -203,8 +228,8 @@ public class AiLogicNew {
                         for (int c = 1; c < 4; ++c) {
                             int column = j - c, row = i - c;
                             for (int m = row; m <= 5; ++m) {
-                                if (b.board[m][column].player == 0) moreMoves++;
-                                else if (b.board[m][column].player == 1) ;
+                                if (b.board[m][column] == 0) moreMoves++;
+                                else if (b.board[m][column] == Player.PLAYER2) ;
                                 else break;
                             }
                         }
@@ -218,81 +243,14 @@ public class AiLogicNew {
         return score;
     }
 
-    //Game Result
-    public int gameResult(Board b) {
-        int aiScore = 0, humanScore = 0;
-        for (int i = 5; i >= 0; --i) {
-            for (int j = 0; j <= 6; ++j) {
-                if (b.board[i][j].player == 0) continue;
-
-                //Checking cells to the right
-                if (j <= 3) {
-                    for (int k = 0; k < 4; ++k) {
-                        if (b.board[i][j + k].player == 1) aiScore++;
-                        else if (b.board[i][j + k].player == 2) humanScore++;
-                        else break;
-                    }
-                    if (aiScore == 4) return 1;
-                    else if (humanScore == 4) return 2;
-                    aiScore = 0;
-                    humanScore = 0;
-                }
-
-                //Checking cells up
-                if (i >= 3) {
-                    for (int k = 0; k < 4; ++k) {
-                        if (b.board[i - k][j].player == 1) aiScore++;
-                        else if (b.board[i - k][j].player == 2) humanScore++;
-                        else break;
-                    }
-                    if (aiScore == 4) return 1;
-                    else if (humanScore == 4) return 2;
-                    aiScore = 0;
-                    humanScore = 0;
-                }
-
-                //Checking diagonal up-right
-                if (j <= 3 && i >= 3) {
-                    for (int k = 0; k < 4; ++k) {
-                        if (b.board[i - k][j + k].player == 1) aiScore++;
-                        else if (b.board[i - k][j + k].player == 2) humanScore++;
-                        else break;
-                    }
-                    if (aiScore == 4) return 1;
-                    else if (humanScore == 4) return 2;
-                    aiScore = 0;
-                    humanScore = 0;
-                }
-
-                //Checking diagonal up-left
-                if (j >= 3 && i >= 3) {
-                    for (int k = 0; k < 4; ++k) {
-                        if (b.board[i - k][j - k].player == 1) aiScore++;
-                        else if (b.board[i - k][j - k].player == 2) humanScore++;
-                        else break;
-                    }
-                    if (aiScore == 4) return 1;
-                    else if (humanScore == 4) return 2;
-                    aiScore = 0;
-                    humanScore = 0;
-                }
-            }
-        }
-
-        for (int j = 0; j < 7; ++j) {
-            //Game has not ended yet
-            if (b.board[0][j].player == 0) return -1;
-        }
-        //Game draw!
-        return 0;
-    }
-
     int calculateScore(int aiScore, int moreMoves) {
         int moveScore = 4 - moreMoves;
         if (aiScore == 0) return 0;
-        else if (aiScore == 1) return 1 * moveScore;
+        else if (aiScore == 1) return moveScore;
         else if (aiScore == 2) return 10 * moveScore;
         else if (aiScore == 3) return 100 * moveScore;
         else return 1000;
     }
+
+
 }

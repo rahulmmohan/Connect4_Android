@@ -3,7 +3,6 @@ package info.overrideandroid.connect4.board;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiLogic;
 import info.overrideandroid.connect4.ai.AiLogicNew;
-import info.overrideandroid.connect4.ai.Board;
+import info.overrideandroid.connect4.ai.AiBoardMove;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
@@ -39,12 +38,12 @@ public class BoardController implements View.OnClickListener {
     /**
      * grid, contains 0 for empty cell or player ID
      */
-    Slot grid[][] = new Slot[ROWS][COLS];
+    private final int[][] grid = new int[ROWS][COLS];
 
     /**
      * free cells in every column
      */
-    int free[] = new int[COLS];
+    private final int[] free = new int[COLS];
 
     /**
      * board logic (winning check)
@@ -76,16 +75,16 @@ public class BoardController implements View.OnClickListener {
      */
     private final Handler handler = new Handler();
 
-    private Context mContext;
-    private BoardView mBoardView;
+    private final Context mContext;
+    private final BoardView mBoardView;
 
     /**
      * Game rules
      */
-    private GameRules gameRules;
+    private final GameRules gameRules;
     private boolean aiTurn;
     private AiLogicNew aiLogicNew;
-    private Board board;
+    private AiBoardMove board;
 
     public BoardController(Context context, BoardView boardView, GameRules gameRules) {
         this.mContext = context;
@@ -106,28 +105,28 @@ public class BoardController implements View.OnClickListener {
 
         // create AI if needed
         if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            board = new Board(grid, logic);
+            board = new AiBoardMove(grid, logic);
             aiLogicNew = new AiLogicNew(board);
             switch (gameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
-                    //aiLogicNew.setDifficulty(2);
+                    aiLogicNew.setDifficulty(2);
                     break;
                 case GameRules.Level.NORMAL:
-                    //aiLogicNew.setDifficulty(4);
+                    aiLogicNew.setDifficulty(4);
                     break;
                 case GameRules.Level.HARD:
-                    //aiLogicNew.setDifficulty(6);
+                    aiLogicNew.setDifficulty(7);
                     break;
                 default:
-                    aiLogic = null;
+                    aiLogicNew = null;
                     break;
             }
-        } else aiLogic = null;
+        } else aiLogicNew = null;
 
         // null the grid and free counter for every column
         for (int j = 0; j < COLS; ++j) {
             for (int i = 0; i < ROWS; ++i) {
-                grid[i][j] = new Slot(i, j);
+                grid[i][j] = 0;
             }
             free[j] = ROWS;
         }
@@ -139,13 +138,7 @@ public class BoardController implements View.OnClickListener {
     private void aiTurn() {
         if (finished) return;
         aiTurn = true;
-        ((GamePlayActivity) mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                selectColumn(aiLogicNew.getAIMove());
-            }
-        });
-       // handler.postDelayed(ai, Constants.AI_DELAY);
+        handler.postDelayed(ai, Constants.AI_DELAY);
     }
 
 
@@ -169,7 +162,7 @@ public class BoardController implements View.OnClickListener {
         mBoardView.dropDisc(free[column], column, playerTurn);
 
         // set who put the disc
-        grid[free[column]][column].player = playerTurn;
+        grid[free[column]][column] = playerTurn;
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
                 ? Player.PLAYER2 : Player.PLAYER1;
@@ -210,7 +203,7 @@ public class BoardController implements View.OnClickListener {
     private Runnable ai = new Runnable() {
         @Override
         public void run() {
-
+            selectColumn(aiLogicNew.getAIMove());
         }
     };
 

@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +17,7 @@ import info.overrideandroid.connect4.rules.Player;
 
 import static info.overrideandroid.connect4.board.BoardController.COLS;
 import static info.overrideandroid.connect4.board.BoardController.ROWS;
+import static info.overrideandroid.connect4.board.BoardLogic.Outcome.PLAYER1_WINS;
 
 /**
  * Created by Rahul on 30/05/17.
@@ -34,9 +33,9 @@ public class BoardView extends RelativeLayout {
      * view holder for player information
      */
     private class PlayerInformation {
-        public TextView name;
-        public ImageView disc;
-        public View turnIndicator;
+        public final TextView name;
+        public final ImageView disc;
+        public final View turnIndicator;
 
         public PlayerInformation(int player_name_id, int player_disc_id, int player_indicator_id) {
             name = (TextView) findViewById(player_name_id);
@@ -78,7 +77,7 @@ public class BoardView extends RelativeLayout {
         init(context);
     }
 
-    void init(Context context) {
+    private void init(Context context) {
         this.mContext = context;
         inflate(context, R.layout.game_board, this);
         player1 = new PlayerInformation(R.id.player1_name, R.id.player1_disc, R.id.player1_indicator);
@@ -99,7 +98,7 @@ public class BoardView extends RelativeLayout {
     /**
      * initialize player1 information with Gamerules
      */
-    public void setPlayer1() {
+    private void setPlayer1() {
         player1.disc.setImageResource(gameRules.getRule(GameRules.DISC));
         player1.name.setText(mContext.getString(R.string.you));
     }
@@ -107,7 +106,7 @@ public class BoardView extends RelativeLayout {
     /**
      * initialize player2 information with Gamerules
      */
-    public void setPlayer2() {
+    private void setPlayer2() {
         player2.disc.setImageResource(gameRules.getRule(GameRules.DISC2));
         player2.name.setText(gameRules.getRule(GameRules.OPPONENT) == R.string.opponent_ai ?
                 mContext.getString(R.string.opponent_ai) : mContext.getString(R.string.opponent_player));
@@ -199,14 +198,22 @@ public class BoardView extends RelativeLayout {
                 case PLAYER1_WINS:
                     winnerView.setText(mContext.getString(R.string.you_win));
                     for (ImageView winDisc : winDiscs) {
-                        winDisc.setImageResource(R.drawable.win_red);
+                        if(gameRules.getRule(GameRules.DISC) == GameRules.Disc.RED ){
+                            winDisc.setImageResource(R.drawable.win_red);
+                        }else {
+                            winDisc.setImageResource(R.drawable.win_yellow);
+                        }
                     }
                     break;
                 case PLAYER2_WINS:
                     winnerView.setText(gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI ?
                             mContext.getString(R.string.you_lose) : mContext.getString(R.string.friend_win));
                     for (ImageView winDisc : winDiscs) {
-                        winDisc.setImageResource(R.drawable.win_yellow);
+                        if(gameRules.getRule(GameRules.DISC2) == GameRules.Disc.RED){
+                            winDisc.setImageResource(R.drawable.win_red);
+                        }else {
+                            winDisc.setImageResource(R.drawable.win_yellow);
+                        }
                     }
                     break;
                 default:
@@ -215,6 +222,10 @@ public class BoardView extends RelativeLayout {
         }else {
             winnerView.setVisibility(INVISIBLE);
         }
+    }
+
+    private void changeWinDiscs(ArrayList<ImageView> winDiscs, BoardLogic.Outcome playerWins) {
+
     }
 
 

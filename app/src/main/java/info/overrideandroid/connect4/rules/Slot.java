@@ -6,7 +6,8 @@ package info.overrideandroid.connect4.rules;
 
 public class Slot {
 
-    public int i, j;
+    private final int i;
+    private final int j;
     public int player = Player.NONE;
     public Slot(int i, int j) {
         this.i = i;

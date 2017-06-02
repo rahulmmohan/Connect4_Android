@@ -8,14 +8,17 @@
     tools:context="info.overrideandroid.connect4.activity.GameMenuActivity">
 
     <TextView
+        android:drawableLeft="@mipmap/ic_launcher"
         android:id="@+id/logo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center_horizontal"
+        android:drawablePadding="10dp"
+
+        android:layout_centerHorizontal="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:text="Connect 4"
+        android:text="@string/app_name"
         android:textColor="@color/black"
         android:textSize="@dimen/app_title"
         android:textStyle="bold" />
@@ -36,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PLAY WITH"
+            android:text="@string/play_with"
             android:textSize="@dimen/option_title_size"
             android:textStyle="bold" />
 
@@ -63,7 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CHOOSE YOUR COLOR"
+            android:text="@string/choose_your_color"
             android:textSize="@dimen/option_title_size"
             android:textStyle="bold" />
 
@@ -93,7 +96,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FIRST TURN"
+            android:text="@string/first_turn"
             android:textSize="@dimen/option_title_size"
             android:textStyle="bold" />
 
@@ -107,14 +110,16 @@
             <RadioButton
                 android:id="@+id/first_turn_player1"
                 style="@style/RadioButtonStyle"
+                android:textAllCaps="true"
                 android:background="@drawable/radio_btn_selector_left_corner"
-                android:text="YOU" />
+                android:text="@string/you" />
 
             <RadioButton
                 android:id="@+id/first_turn_player2"
                 style="@style/RadioButtonStyle"
+                android:textAllCaps="true"
                 android:background="@drawable/radio_btn_selector_right_corner"
-                android:text="AI" />
+                android:text="@string/opponent_ai" />
         </RadioGroup>
 
         <LinearLayout
@@ -127,7 +132,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DIFFICULTY"
+                android:text="@string/difficulty"
                 android:textSize="@dimen/option_title_size"
                 android:textStyle="bold" />
 
@@ -136,8 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="2"
-                android:progress="3"
-                android:splitTrack="true" />
+                android:progress="3"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -147,21 +151,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="Easy"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/level_0"
                     android:textSize="@dimen/seekbar_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Normal"
+                    android:text="@string/level_1"
                     android:textSize="@dimen/seekbar_text_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Hard"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/level_2"
                     android:textSize="@dimen/seekbar_text_size" />
             </RelativeLayout>
         </LinearLayout>
