@@ -65,8 +65,8 @@ public class BoardLogic {
      */
     public BoardLogic(Slot[][] _grid) {
         grid = _grid;
-        numCols = _grid.length;
-        numRows = _grid[0].length;
+        numRows = _grid.length;
+        numCols = _grid[0].length;
 
     }
 
@@ -84,8 +84,8 @@ public class BoardLogic {
 
     private boolean horizontalCheck() {
         // horizontalCheck
-        for (int j = 0; j < numRows - 3; j++) {
-            for (int i = 0; i < numCols; i++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols - 3; j++) {
                 cellValue = grid[i][j].player;
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i][j + 1].player == cellValue && grid[i][j + 2].player == cellValue && grid[i][j + 3].player == cellValue) {
@@ -102,8 +102,8 @@ public class BoardLogic {
 
     private boolean verticalCheck() {
         // verticalCheck
-        for (int i = 0; i < numCols - 3; i++) {
-            for (int j = 0; j < this.numRows; j++) {
+        for (int j = 0; j < numCols; j++) {
+            for (int i = 0; i < numRows - 3; i++) {
                 cellValue = grid[i][j].player;
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i + 1][j].player == cellValue && grid[i + 2][j].player == cellValue && grid[i + 3][j].player == cellValue) {
@@ -117,11 +117,22 @@ public class BoardLogic {
         }
         return false;
     }
-
+    /**
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     * {0,0,0,0,0,0}
+     *
+     * @param b
+     * @return
+     */
     private boolean ascendingDiagonalCheck() {
         // ascendingDiagonalCheck
-        for (int i = 3; i < numCols; i++) {
-            for (int j = 0; j < numRows - 3; j++) {
+        for (int i = 3; i < numRows; i++) {
+            for (int j = 0; j < numCols - 3; j++) {
                 cellValue = grid[i][j].player;
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i - 1][j + 1].player == cellValue && grid[i - 2][j + 2].player == cellValue && grid[i - 3][j + 3].player == cellValue) {
@@ -138,8 +149,8 @@ public class BoardLogic {
 
     private boolean descendingDiagonalCheck() {
         // descendingDiagonalCheck
-        for (int i = 3; i < numCols; i++) {
-            for (int j = 3; j < numRows; j++) {
+        for (int i = 3; i < numRows; i++) {
+            for (int j = 3; j < numCols; j++) {
                 cellValue = grid[i][j].player;
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i - 1][j - 1].player == cellValue && grid[i - 2][j - 2].player == cellValue && grid[i - 3][j - 3].player == cellValue) {
@@ -164,9 +175,10 @@ public class BoardLogic {
     public ArrayList<ImageView> getWinDiscs(ImageView[][] cells) {
         ArrayList<ImageView> combination = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            combination.add(cells[p + WIN_X * i][q + WIN_Y * i]);
+            combination.add(cells[p + WIN_Y * i][q + WIN_X * i]);
         }
         return combination;
     }
+
 
 }

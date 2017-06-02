@@ -48,6 +48,7 @@ public class HardAiLogic extends NormalAiLogic {
         com = Math.max(com, countCom(x, y, X_L, Y_T, p));
         com = Math.max(com, countCom(x, y, X_L, Y_B, p));
         com = Math.max(com, countCom(x, y, 0, Y_T, p));
+
         return com;
     }
 

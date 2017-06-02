@@ -147,14 +147,14 @@ public class BoardView extends RelativeLayout {
      * @param col
      * @param row
      */
-    public void dropDisc(int col, int row, final int playerTurn) {
+    public void dropDisc(int row, int col, final int playerTurn) {
         final ImageView cell = cells[row][col];
         float move = -(cell.getHeight() * row + cell.getHeight() + 15);
         cell.setY(move);
         cell.setImageResource(playerTurn == Player.PLAYER1 ?
                 gameRules.getRule(GameRules.DISC) : gameRules.getRule(GameRules.DISC2));
         TranslateAnimation anim = new TranslateAnimation(0, 0, 0, Math.abs(move));
-        anim.setDuration(800);
+        anim.setDuration(500);
         anim.setFillAfter(true);
         anim.setInterpolator(new AccelerateInterpolator());
         anim.setInterpolator(new BounceInterpolator());
@@ -201,14 +201,14 @@ public class BoardView extends RelativeLayout {
                 case PLAYER1_WINS:
                     winnerView.setText(mContext.getString(R.string.you_win));
                     for (ImageView winDisc : winDiscs) {
-                        winDisc.setImageResource(R.drawable.cell_frame);
+                        winDisc.setImageResource(R.drawable.win_red);
                     }
                     break;
                 case PLAYER2_WINS:
                     winnerView.setText(gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI ?
                             mContext.getString(R.string.you_lose) : mContext.getString(R.string.friend_win));
                     for (ImageView winDisc : winDiscs) {
-                        winDisc.setImageResource(R.drawable.cell_frame);
+                        winDisc.setImageResource(R.drawable.win_yellow);
                     }
                     break;
                 default:

@@ -103,7 +103,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:text="Winner!"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="50sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 

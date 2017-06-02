@@ -11,9 +11,8 @@ import java.util.ArrayList;
 
 import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiLogic;
-import info.overrideandroid.connect4.ai.EasyAiLogic;
-import info.overrideandroid.connect4.ai.HardAiLogic;
-import info.overrideandroid.connect4.ai.NormalAiLogic;
+import info.overrideandroid.connect4.ai.AiLogicNew;
+import info.overrideandroid.connect4.ai.Board;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
@@ -40,7 +39,7 @@ public class BoardController implements View.OnTouchListener {
     /**
      * grid, contains 0 for empty cell or player ID
      */
-    Slot grid[][] = new Slot[COLS][ROWS];
+    Slot grid[][] = new Slot[ROWS][COLS];
 
     /**
      * free cells in every column
@@ -55,7 +54,7 @@ public class BoardController implements View.OnTouchListener {
     /**
      * AI logic
      */
-    private  AiLogic aiLogic;
+    private AiLogic aiLogic;
 
     /**
      * current status
@@ -72,7 +71,9 @@ public class BoardController implements View.OnTouchListener {
      */
     private int playerTurn;
 
-    /** main thread handler */
+    /**
+     * main thread handler
+     */
     private final Handler handler = new Handler();
 
     private Context mContext;
@@ -83,6 +84,7 @@ public class BoardController implements View.OnTouchListener {
      */
     private GameRules gameRules;
     private boolean aiTurn;
+    private AiLogicNew aiLogicNew;
 
     public BoardController(Context context, BoardView boardView, GameRules gameRules) {
         this.mContext = context;
@@ -104,15 +106,17 @@ public class BoardController implements View.OnTouchListener {
 
         // create AI if needed
         if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
+            Board board = new Board(grid, logic);
+            aiLogicNew = new AiLogicNew(board);
             switch (gameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
-                    aiLogic = new EasyAiLogic(grid);
+                    //aiLogicNew.setDifficulty(2);
                     break;
                 case GameRules.Level.NORMAL:
-                    aiLogic = new NormalAiLogic(grid);
+                    //aiLogicNew.setDifficulty(4);
                     break;
                 case GameRules.Level.HARD:
-                    aiLogic = new HardAiLogic(grid);
+                    //aiLogicNew.setDifficulty(6);
                     break;
                 default:
                     aiLogic = null;
@@ -121,19 +125,19 @@ public class BoardController implements View.OnTouchListener {
         } else aiLogic = null;
 
         // null the grid and free counter for every column
-        for (int i = 0; i < COLS; ++i) {
-            for (int j = 0; j < ROWS; ++j) {
-                grid[i][j] = new Slot(i,j);
+        for (int j = 0; j < COLS; ++j) {
+            for (int i = 0; i < ROWS; ++i) {
+                grid[i][j] = new Slot(i, j);
             }
-            free[i] = ROWS;
+            free[j] = ROWS;
         }
 
         // if it is a computer turn, go ahead with it
-        if(playerTurn == GameRules.FirstTurn.PLAYER2 && aiLogic != null) aiTurn();
+        if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiLogicNew != null) aiTurn();
     }
 
     private void aiTurn() {
-        if(finished) return;
+        if (finished) return;
         aiTurn = true;
         handler.postDelayed(ai, Constants.AI_DELAY);
     }
@@ -144,7 +148,7 @@ public class BoardController implements View.OnTouchListener {
         switch (event.getAction()) {
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_UP: {
-                if(finished || aiTurn ) return true;
+                if (finished || aiTurn) return true;
                 int col = mBoardView.colAtX(event.getX());
                 selectColumn(col);
             }
@@ -169,10 +173,10 @@ public class BoardController implements View.OnTouchListener {
         free[column]--;
 
         // put disc
-        mBoardView.dropDisc(column, free[column], playerTurn);
+        mBoardView.dropDisc(free[column], column, playerTurn);
 
         // set who put the disc
-        grid[column][free[column]].player = playerTurn;
+        grid[free[column]][column].player = playerTurn;
 
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
@@ -182,7 +186,7 @@ public class BoardController implements View.OnTouchListener {
         checkForWin();
         aiTurn = false;
         // AI move if needed
-        if(playerTurn == Player.PLAYER2 && aiLogic != null) aiTurn();
+        if (playerTurn == Player.PLAYER2 && aiLogicNew != null) aiTurn();
     }
 
     private void checkForWin() {
@@ -191,7 +195,7 @@ public class BoardController implements View.OnTouchListener {
         if (outcome != Outcome.NOTHING) {
             finished = true;
             ArrayList<ImageView> winDiscs = logic.getWinDiscs(mBoardView.getCells());
-            mBoardView.showWinStatus(outcome,winDiscs);
+            mBoardView.showWinStatus(outcome, winDiscs);
 
         } else {
             mBoardView.togglePlayer(playerTurn);
@@ -211,16 +215,12 @@ public class BoardController implements View.OnTouchListener {
     /**
      * Runs AI after a delay
      */
-    private Runnable ai = new Runnable(){
+    private Runnable ai = new Runnable() {
         @Override
         public void run() {
-            try {
-                Thread.sleep(Constants.AI_DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            selectColumn(aiLogic.run());
+            selectColumn(aiLogicNew.getAIMove());
         }
     };
+
 
 }
