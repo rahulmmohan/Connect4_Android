@@ -12,6 +12,7 @@ import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiLogic;
 import info.overrideandroid.connect4.ai.AiLogicNew;
 import info.overrideandroid.connect4.ai.AiBoardMove;
+import info.overrideandroid.connect4.ai.AiPlayer;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
@@ -85,6 +86,7 @@ public class BoardController implements View.OnClickListener {
     private boolean aiTurn;
     private AiLogicNew aiLogicNew;
     private AiBoardMove board;
+    private AiPlayer aiPlayer;
 
     public BoardController(Context context, BoardView boardView, GameRules gameRules) {
         this.mContext = context;
@@ -102,11 +104,19 @@ public class BoardController implements View.OnClickListener {
         // unfinished the game
         finished = false;
         outcome = Outcome.NOTHING;
+        // null the grid and free counter for every column
+        for (int j = 0; j < COLS; ++j) {
+            for (int i = 0; i < ROWS; ++i) {
+                grid[i][j] = 0;
+            }
+            free[j] = ROWS;
+        }
 
         // create AI if needed
         if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            board = new AiBoardMove(grid, logic);
+            board = new AiBoardMove(grid, logic,free);
             aiLogicNew = new AiLogicNew(board);
+            aiPlayer = new AiPlayer(board);
             switch (gameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
                     aiLogicNew.setDifficulty(2);
@@ -123,13 +133,6 @@ public class BoardController implements View.OnClickListener {
             }
         } else aiLogicNew = null;
 
-        // null the grid and free counter for every column
-        for (int j = 0; j < COLS; ++j) {
-            for (int i = 0; i < ROWS; ++i) {
-                grid[i][j] = 0;
-            }
-            free[j] = ROWS;
-        }
 
         // if it is a computer turn, go ahead with it
         if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiLogicNew != null) aiTurn();
@@ -163,12 +166,14 @@ public class BoardController implements View.OnClickListener {
 
         // set who put the disc
         grid[free[column]][column] = playerTurn;
+        board.placeMove(column,playerTurn);
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
                 ? Player.PLAYER2 : Player.PLAYER1;
 
         // check if someone has won
         checkForWin();
+     //   board.displayBoard();
         aiTurn = false;
         // AI move if needed
         if (playerTurn == Player.PLAYER2 && aiLogicNew != null) aiTurn();
@@ -203,7 +208,7 @@ public class BoardController implements View.OnClickListener {
     private Runnable ai = new Runnable() {
         @Override
         public void run() {
-            selectColumn(aiLogicNew.getAIMove());
+            selectColumn(aiPlayer.getColumn());
         }
     };
 
