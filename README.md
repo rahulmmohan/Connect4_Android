@@ -5,8 +5,20 @@ Connect Four is a two-player connection game in which the players first choose a
 
 The animation demonstrates Connect Four gameplay where the first player begins by dropping his/her yellow disc into the center column of the game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves four discs in a row, diagonally, and wins. If the game board fills before either player achieves four in a row, then the game is a draw.
 
+# Architecture
+When we googling for **"clean code"** we can find a name **Uncle Bob** is: he formulated the First Five Principles of Object Oriented Design (which were later given acronym S.O.L.I.D), was among original authors of Manifesto for Agile Software Development. Since Uncle Bob unconditionally states that the only way to move fast is to keep the code clean, and since Android does not encourage us to write clean code, it is our job as professional software developers to find ways to keep our code clean at all times.
 
-### Designing the app
+Proper **MVC architecture** implementations have the following characteristics:
+
+* Readable and maintainable code
+* Modular code which provides high degree of flexibility
+* More testable code (especially in context of unit testing)
+* Code which is fun to work with
+
+The above characteristics are generally associated with “clean code”. Therefore, following Uncle Bob’s reasoning, adoption of  **MVC architecture** allows me to “go faster” with this project.
+
+
+### App Workflow and Screenshots
 
 The versions of the Connect 4 Android app consists of three UI screens: 
 * Spash - Used to show app name and logo.
