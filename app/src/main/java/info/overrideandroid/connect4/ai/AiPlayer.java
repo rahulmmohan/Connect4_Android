@@ -14,7 +14,7 @@ public class AiPlayer {
     }
 
     public int getColumn() {
-        return chooseMove(1,2,board,-10000,10000,10).getColumn();
+        return chooseMove(1,2,board,-10000,10000,2).getColumn();
     }
 
     /**

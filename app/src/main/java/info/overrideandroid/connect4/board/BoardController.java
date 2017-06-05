@@ -9,14 +9,12 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import info.overrideandroid.connect4.activity.GamePlayActivity;
-import info.overrideandroid.connect4.ai.AiLogic;
 import info.overrideandroid.connect4.ai.AiLogicNew;
 import info.overrideandroid.connect4.ai.AiBoardMove;
 import info.overrideandroid.connect4.ai.AiPlayer;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
-import info.overrideandroid.connect4.rules.Slot;
 import info.overrideandroid.connect4.utils.Constants;
 
 /**
@@ -51,10 +49,6 @@ public class BoardController implements View.OnClickListener {
      */
     private final BoardLogic logic = new BoardLogic(grid);
 
-    /**
-     * AI logic
-     */
-    private AiLogic aiLogic;
 
     /**
      * current status
