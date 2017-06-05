@@ -1,10 +1,12 @@
 package info.overrideandroid.connect4.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import info.overrideandroid.connect4.R;
+import info.overrideandroid.connect4.controller.GameMenuController;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.view.MenuView;
 
@@ -21,7 +23,7 @@ public class GameMenuActivity extends AppCompatActivity implements GameMenuContr
     }
 
     @Override
-    public void onPlay(GameRules gameRules) {
+    public void onPlay(@NonNull GameRules gameRules) {
         Intent gamePlayIntent = new Intent(this,GamePlayActivity.class);
         gamePlayIntent.putExtras(gameRules.exportTo(new Bundle()));
         startActivity(gamePlayIntent);

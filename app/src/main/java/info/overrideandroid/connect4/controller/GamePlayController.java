@@ -1,7 +1,9 @@
-package info.overrideandroid.connect4.board;
+package info.overrideandroid.connect4.controller;
 
 import android.content.Context;
-import android.os.Handler;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,21 +11,21 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import info.overrideandroid.connect4.activity.GamePlayActivity;
-import info.overrideandroid.connect4.ai.AiLogicNew;
-import info.overrideandroid.connect4.ai.AiBoardMove;
 import info.overrideandroid.connect4.ai.AiPlayer;
+import info.overrideandroid.connect4.board.BoardLogic;
 import info.overrideandroid.connect4.board.BoardLogic.Outcome;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
 import info.overrideandroid.connect4.utils.Constants;
+import info.overrideandroid.connect4.view.BoardView;
 
 /**
  * Created by Rahul on 30/05/17.
  */
 
-public class BoardController implements View.OnClickListener {
+public class GamePlayController implements View.OnClickListener {
 
-    private static final String TAG = BoardController.class.getName();
+    private static final String TAG = GamePlayController.class.getName();
     /**
      * number of columns
      */
@@ -47,12 +49,18 @@ public class BoardController implements View.OnClickListener {
     /**
      * board logic (winning check)
      */
-    private final BoardLogic logic = new BoardLogic(grid);
+    private final BoardLogic logic = new BoardLogic(grid, free);
 
+    /**
+     * Instance of Ai player
+     */
+    @Nullable
+    private AiPlayer aiPlayer;
 
     /**
      * current status
      */
+    @NonNull
     private Outcome outcome = Outcome.NOTHING;
 
     /**
@@ -65,30 +73,25 @@ public class BoardController implements View.OnClickListener {
      */
     private int playerTurn;
 
-    /**
-     * main thread handler
-     */
-    private final Handler handler = new Handler();
-
     private final Context mContext;
+
     private final BoardView mBoardView;
 
     /**
      * Game rules
      */
+    @NonNull
     private final GameRules gameRules;
-    private boolean aiTurn;
-    private AiLogicNew aiLogicNew;
-    private AiBoardMove board;
-    private AiPlayer aiPlayer;
 
-    public BoardController(Context context, BoardView boardView, GameRules gameRules) {
+    private boolean aiTurn;
+
+    public GamePlayController(Context context, BoardView boardView, @NonNull GameRules gameRules) {
         this.mContext = context;
         this.gameRules = gameRules;
         this.mBoardView = boardView;
         initialize();
         if (mBoardView != null) {
-            mBoardView.initialize(this,gameRules);
+            mBoardView.initialize(this, gameRules);
         }
     }
 
@@ -108,34 +111,32 @@ public class BoardController implements View.OnClickListener {
 
         // create AI if needed
         if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            board = new AiBoardMove(grid, logic,free);
-            aiLogicNew = new AiLogicNew(board);
-            aiPlayer = new AiPlayer(board);
+            aiPlayer = new AiPlayer(logic);
             switch (gameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
-                    aiLogicNew.setDifficulty(2);
+                    aiPlayer.setDifficulty(4);
                     break;
                 case GameRules.Level.NORMAL:
-                    aiLogicNew.setDifficulty(4);
+                    aiPlayer.setDifficulty(7);
                     break;
                 case GameRules.Level.HARD:
-                    aiLogicNew.setDifficulty(7);
+                    aiPlayer.setDifficulty(10);
                     break;
                 default:
-                    aiLogicNew = null;
+                    aiPlayer = null;
                     break;
             }
-        } else aiLogicNew = null;
-
+        } else {
+            aiPlayer = null;
+        }
 
         // if it is a computer turn, go ahead with it
-        if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiLogicNew != null) aiTurn();
+        if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiPlayer != null) aiTurn();
     }
 
     private void aiTurn() {
         if (finished) return;
-        aiTurn = true;
-        handler.postDelayed(ai, Constants.AI_DELAY);
+        new AiTask().execute();
     }
 
 
@@ -152,25 +153,21 @@ public class BoardController implements View.OnClickListener {
             return;
         }
 
-        // decrement free space in this column
-        free[column]--;
+        logic.placeMove(column, playerTurn);
 
         // put disc
         mBoardView.dropDisc(free[column], column, playerTurn);
 
-        // set who put the disc
-        grid[free[column]][column] = playerTurn;
-        board.placeMove(column,playerTurn);
         // switch player
         playerTurn = playerTurn == Player.PLAYER1
                 ? Player.PLAYER2 : Player.PLAYER1;
 
         // check if someone has won
         checkForWin();
-     //   board.displayBoard();
+        //   board.displayBoard();
         aiTurn = false;
         // AI move if needed
-        if (playerTurn == Player.PLAYER2 && aiLogicNew != null) aiTurn();
+        if (playerTurn == Player.PLAYER2 && aiPlayer != null) aiTurn();
     }
 
     private void checkForWin() {
@@ -196,21 +193,39 @@ public class BoardController implements View.OnClickListener {
 
     }
 
-    /**
-     * Runs AI after a delay
-     */
-    private Runnable ai = new Runnable() {
-        @Override
-        public void run() {
-            selectColumn(aiPlayer.getColumn());
-        }
-    };
-
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         if (finished || aiTurn) return;
         int col = mBoardView.colAtX(view.getX());
         selectColumn(col);
+    }
+
+    /**
+     * run ai movement in background thread
+     */
+    class AiTask extends AsyncTask<Void, Void, Integer> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            aiTurn = true;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                Thread.currentThread();
+                Thread.sleep(Constants.AI_DELAY);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return aiPlayer.getColumn();
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            selectColumn(integer);
+        }
     }
 }

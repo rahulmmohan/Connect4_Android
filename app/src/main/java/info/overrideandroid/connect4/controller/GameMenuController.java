@@ -1,5 +1,6 @@
-package info.overrideandroid.connect4.activity;
+package info.overrideandroid.connect4.controller;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -79,9 +80,10 @@ public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekB
 
     }
 
+    @NonNull
     private GameRules getDefaultGameRules() {
         gameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
-        gameRules.setRule(GameRules.LEVEL, GameRules.Level.NORMAL);
+        gameRules.setRule(GameRules.LEVEL, GameRules.Level.HARD);
         gameRules.setRule(GameRules.OPPONENT, Opponent.AI);
         gameRules.setRule(GameRules.DISC, GameRules.Disc.RED);
         gameRules.setRule(GameRules.DISC2, GameRules.Disc.YELLOW);

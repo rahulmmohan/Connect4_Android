@@ -6,7 +6,6 @@ package info.overrideandroid.connect4.rules;
  */
 
 public class Player {
-    public static final int NONE = 0;
-    public static final int PLAYER1 = 2;
-    public static final int PLAYER2 = 1;
+    public static final int PLAYER1 = 1;//you
+    public static final int PLAYER2 = 2;//Ai or friend
 }

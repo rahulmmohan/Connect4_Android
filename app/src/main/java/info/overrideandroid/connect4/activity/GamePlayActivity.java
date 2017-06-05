@@ -2,19 +2,20 @@ package info.overrideandroid.connect4.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import info.overrideandroid.connect4.R;
-import info.overrideandroid.connect4.board.BoardController;
-import info.overrideandroid.connect4.board.BoardView;
+import info.overrideandroid.connect4.controller.GamePlayController;
+import info.overrideandroid.connect4.view.BoardView;
 import info.overrideandroid.connect4.rules.GameRules;
 
 public class GamePlayActivity extends AppCompatActivity {
 
-    private BoardController gameController;
+    private GamePlayController gameController;
     private final GameRules gameRules = new GameRules();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class GamePlayActivity extends AppCompatActivity {
 
         BoardView boardView = (BoardView) findViewById(R.id.gameView);
         gameRules.importFrom(getIntent().getExtras());
-        gameController = new BoardController(this, boardView, gameRules);
+        gameController = new GamePlayController(this, boardView, gameRules);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
     }
@@ -35,7 +36,7 @@ public class GamePlayActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 exitPlay();

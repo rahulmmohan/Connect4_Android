@@ -1,6 +1,7 @@
 package info.overrideandroid.connect4.rules;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import info.overrideandroid.connect4.R;
 
@@ -75,6 +76,7 @@ public class GameRules {
     /**
      * rules
      */
+    @NonNull
     private final Rule[] rules;
 
     /**
@@ -110,7 +112,8 @@ public class GameRules {
         rules[rule].setId(value);
     }
 
-    public Bundle exportTo(Bundle bundle) {
+    @NonNull
+    public Bundle exportTo(@NonNull Bundle bundle) {
         int[] bundleRules = new int[rules.length];
         for(int i = 0; i < rules.length; ++i) {
             bundleRules[i] = rules[i].getSelectedId();
@@ -120,9 +123,9 @@ public class GameRules {
         return bundle;
     }
 
-    public void importFrom(Bundle bundle) {
+    public void importFrom(@NonNull Bundle bundle) {
         int[] bundleRules = bundle.getIntArray("rules");
-        for(int i = 0; i < bundleRules.length; ++i) {
+        for(int i = 0; i < (bundleRules != null ? bundleRules.length : 0); ++i) {
             rules[i].setId(bundleRules[i]);
         }
     }

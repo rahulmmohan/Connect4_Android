@@ -1,5 +1,6 @@
 package info.overrideandroid.connect4.board;
 
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class BoardLogic {
     /**
      * Reference to a main grid
      */
+    @NonNull
     private final int[][] grid;
 
     /**
@@ -55,17 +57,23 @@ public class BoardLogic {
     private int WIN_Y = 0;
 
     /**
+     * reference to free cells in every column
+     */
+    private final int[] free;
+
+    /**
      * Initialise members
      *
      * @param _grid
      */
-    public BoardLogic(int[][] _grid) {
+    public BoardLogic(@NonNull int[][] _grid, int[] free) {
         grid = _grid;
         numRows = _grid.length;
         numCols = _grid[0].length;
-
+        this.free = free;
     }
 
+    @NonNull
     public Outcome checkWin() {
         draw = true;
         cellValue = 0;
@@ -157,12 +165,151 @@ public class BoardLogic {
      * @param cells
      * @return
      */
+    @NonNull
     public ArrayList<ImageView> getWinDiscs(ImageView[][] cells) {
         ArrayList<ImageView> combination = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             combination.add(cells[p + WIN_Y * i][q + WIN_X * i]);
         }
         return combination;
+    }
+
+    /**
+     * placing a Move on the grid
+     */
+
+    public void placeMove(int column, int player) {
+        if (free[column] > 0) {
+            grid[free[column] - 1][column] = player;
+            free[column]--;
+        }
+    }
+
+    /**
+     * undo previous move
+     *
+     * @param column
+     */
+    public void undoMove(int column) {
+        if (free[column] < numRows) {
+            free[column]++;
+            grid[free[column] - 1][column] = 0;
+
+        }
+    }
+
+    /**
+     * Get the height the counters in a specific column
+     *
+     * @param index index of the column to check
+     * @return the height of the column
+     */
+    public int columnHeight(int index) {
+        return free[index];
+    }
+
+
+    /**
+     * Check if a counter at a specific grid position is involved in a match
+     *
+     * @param column column the counter is in
+     * @param row    row the counter is in
+     * @return true if the counter is involved in a match, false otherwise
+     */
+    public boolean checkMatch(int column, int row) {
+        int horizontal_matches = 0;
+        int vertical_matches = 0;
+        int forward_diagonal_matches = 0;
+        int backward_diagonal_matches = 0;
+
+        // horizontal matches
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column + i, row)) {
+                horizontal_matches++;
+            } else break;
+        }
+
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column - i, row)) {
+                horizontal_matches++;
+            } else break;
+        }
+
+        // vertical matches
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column, row + i)) {
+                vertical_matches++;
+            } else break;
+        }
+
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column, row - i)) {
+                vertical_matches++;
+            } else break;
+        }
+
+        // backward diagonal matches ( \ )
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column + i, row - i)) {
+                backward_diagonal_matches++;
+            } else break;
+        }
+
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column - i, row + i)) {
+                backward_diagonal_matches++;
+            } else break;
+        }
+
+        // forward diagonal matches ( / )
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column + i, row + i)) {
+                forward_diagonal_matches++;
+            } else break;
+        }
+
+        for (int i = 1; i < 4; i++) {
+            if (matchingCounters(column, row, column - i, row - i)) {
+                forward_diagonal_matches++;
+            } else break;
+        }
+
+        return horizontal_matches >= 3
+                || vertical_matches >= 3
+                || forward_diagonal_matches >= 3
+                || backward_diagonal_matches >= 3;
+    }
+
+    /**
+     * Check if a counter at a specific position matches a counter at a
+     * different specific position
+     *
+     * @param columnA column the first counter is in
+     * @param rowA    row the first counter is in
+     * @param columnB column the second counter is in
+     * @param rowB    row the second counter is in
+     * @return
+     */
+    private boolean matchingCounters(int columnA, int rowA, int columnB, int rowB) {
+        // return false if either set of coordinates falls out of bounds
+        if (columnA < 0 || columnA >= numCols
+                || rowA < 0 || rowA >= numRows
+                || columnB < 0 || columnB >= numCols
+                || rowB < 0 || rowB >= numRows) {
+            return false;
+        }
+        return !(grid[rowA][columnA] == 0 || grid[rowB][columnB] == 0) && grid[rowA][columnA] == grid[rowB][columnB];
+    }
+
+    public void displayBoard(){
+        System.out.println();
+        for(int i=0;i<=5;++i){
+            for(int j=0;j<=6;++j){
+                System.out.print(grid[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 

@@ -1,5 +1,7 @@
 package info.overrideandroid.connect4;
 
+import android.support.annotation.NonNull;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,6 +12,7 @@ import info.overrideandroid.connect4.board.BoardLogic;
  */
 
 public class WinCheckTest {
+    @NonNull
     private int[][] gridForHorizontalCheck = {
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
@@ -18,6 +21,7 @@ public class WinCheckTest {
             {0,0,0,0,0,0,0,},
             {1,1,1,1,0,0,0,},
     };
+    @NonNull
     private int[][] gridForVerticalCheck = {
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
@@ -26,6 +30,7 @@ public class WinCheckTest {
             {1,0,0,0,0,0,0,},
             {1,0,0,0,0,0,0,},
     };
+    @NonNull
     private int[][] gridForAcendingDiagonalCheck = {
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
@@ -34,7 +39,7 @@ public class WinCheckTest {
             {0,1,2,2,0,0,0,},
             {1,2,2,2,0,0,0,},
     };
-    private int[][] gridFoDescendingDiagonalCheck = {
+    private final int[][] gridFoDescendingDiagonalCheck = {
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
             {1,0,0,0,0,0,0,},
@@ -44,7 +49,7 @@ public class WinCheckTest {
     };
     @Test
     public void testWInnerCheck(){
-        BoardLogic boardLogic = new BoardLogic(gridFoDescendingDiagonalCheck);
+        BoardLogic boardLogic = new BoardLogic(gridFoDescendingDiagonalCheck,null);
         Assert.assertSame("Winner check failed",BoardLogic.Outcome.PLAYER2_WINS,boardLogic.checkWin());
     }
 }

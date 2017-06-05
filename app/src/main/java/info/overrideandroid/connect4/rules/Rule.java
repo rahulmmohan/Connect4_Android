@@ -37,4 +37,8 @@ abstract class Rule {
     void setId(int id){
         selectedId = id;
     }
+
+    public int[] getRuleIds() {
+        return ruleIds;
+    }
 }

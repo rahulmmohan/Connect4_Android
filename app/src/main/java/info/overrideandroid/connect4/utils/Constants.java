@@ -8,11 +8,10 @@ public class Constants {
     /** debug flag */
     public static final boolean DEBUG = true;
 
-    /** delay between AI turn */
-    public static final int AI_DELAY = 1000; // ms
+    /**
+     * Ai delay
+     */
+    public static final int AI_DELAY = 1000;
 
-    /** delay between toggle */
-    public static final int TOGGLE_DELAY = 800; // ms
-
-    public static final int SPLASH_TIME_OUT = 3000;
+    public static final int SPLASH_TIME_OUT = 2000;
 }

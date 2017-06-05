@@ -4,10 +4,10 @@ package info.overrideandroid.connect4.ai;
  * Created by Rahul on 03/06/17.
  */
 
-public class Move {
+class Move {
 
-    int column;
-    int score;
+    private final int column;
+    private final int score;
 
     /**
      * @param column column the move is in

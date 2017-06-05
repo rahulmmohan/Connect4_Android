@@ -1,6 +1,7 @@
-package info.overrideandroid.connect4.board;
+package info.overrideandroid.connect4.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import info.overrideandroid.connect4.R;
+import info.overrideandroid.connect4.controller.GamePlayController;
+import info.overrideandroid.connect4.board.BoardLogic;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.Player;
 
-import static info.overrideandroid.connect4.board.BoardController.COLS;
-import static info.overrideandroid.connect4.board.BoardController.ROWS;
-import static info.overrideandroid.connect4.board.BoardLogic.Outcome.PLAYER1_WINS;
+import static info.overrideandroid.connect4.controller.GamePlayController.COLS;
+import static info.overrideandroid.connect4.controller.GamePlayController.ROWS;
 
 /**
  * Created by Rahul on 30/05/17.
@@ -27,13 +29,15 @@ public class BoardView extends RelativeLayout {
 
 
     private GameRules gameRules;
-    private BoardController listener;
+    private GamePlayController listener;
 
     /**
      * view holder for player information
      */
     private class PlayerInformation {
+        @NonNull
         public final TextView name;
+        @NonNull
         public final ImageView disc;
         public final View turnIndicator;
 
@@ -86,9 +90,9 @@ public class BoardView extends RelativeLayout {
         winnerView = (TextView) findViewById(R.id.winner_text);
     }
 
-    public void initialize(BoardController boardController, GameRules gameRules) {
+    public void initialize(GamePlayController gamePlayController, @NonNull GameRules gameRules) {
         this.gameRules = gameRules;
-        this.listener =boardController;
+        this.listener = gamePlayController;
         setPlayer1();
         setPlayer2();
         togglePlayer(gameRules.getRule(GameRules.FIRST_TURN));
@@ -184,7 +188,7 @@ public class BoardView extends RelativeLayout {
      * @param outcome
      * @param winDiscs
      */
-    public void showWinStatus(BoardLogic.Outcome outcome, ArrayList<ImageView> winDiscs) {
+    public void showWinStatus(@NonNull BoardLogic.Outcome outcome, @NonNull ArrayList<ImageView> winDiscs) {
 
         if(outcome != BoardLogic.Outcome.NOTHING) {
 
@@ -222,10 +226,6 @@ public class BoardView extends RelativeLayout {
         }else {
             winnerView.setVisibility(INVISIBLE);
         }
-    }
-
-    private void changeWinDiscs(ArrayList<ImageView> winDiscs, BoardLogic.Outcome playerWins) {
-
     }
 
 

@@ -1,6 +1,7 @@
 package info.overrideandroid.connect4.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -8,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import info.overrideandroid.connect4.R;
-import info.overrideandroid.connect4.activity.GameMenuController;
+import info.overrideandroid.connect4.controller.GameMenuController;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.GameRules.*;
 /**
@@ -69,7 +70,7 @@ public class MenuView extends RelativeLayout {
         ((SeekBar) findViewById(R.id.difficulty)).setProgress(rule);
     }
 
-    public void setupMenu(GameRules defaultGameRules) {
+    public void setupMenu(@NonNull GameRules defaultGameRules) {
         setPlayWith(defaultGameRules.getRule(GameRules.OPPONENT));
         setFirstTurn(defaultGameRules.getRule(GameRules.FIRST_TURN));
         setPLayer1Disc(defaultGameRules.getRule(GameRules.DISC));
