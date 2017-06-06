@@ -2,8 +2,8 @@
 
 Connect Four is a two-player connection game in which the players first choose a color and then take turns dropping colored discs from the top into a seven-column, six-row vertically suspended grid. The pieces fall straight down, occupying the next available space within the column. The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own discs.
 ## GamePlay
-<iframe src="https://appetize.io/embed/0an4vqrp545hnkjma9q7g7h47m?device=nexus5&scale=75&orientation=portrait&osVersion=7.0"></iframe>
 
+<img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/ezgif-2-355bc88733.gif" width="300px" />
 
 The animation demonstrates Connect Four gameplay where the first player begins by dropping his/her yellow disc into the center column of the game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves four discs in a row, diagonally, and wins. If the game board fills before either player achieves four in a row, then the game is a draw.
 
