@@ -23,11 +23,16 @@ The above characteristics are generally associated with “clean code”. Theref
 
 The versions of the Connect 4 Android app consists of three UI screens: 
 ### Spash 
-Splash screen is simple screen that shows the app logo and name to the user, the screen visible on each startup of th app for a two second.
+Splash screen is a simple screen that shows the app logo and name to the user, the screen visible on each startup of th app for a two second.
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/splash.png" width=200px/>
 
 ### Game Menu
-Used to select the game mode - User can play against a Computer or a friend, can choose the color disc,first turn and        the dificulty when playing with computer.
+Game menu screen offer options to change the game play mode. The different options avaliable on the menu are:
+* Play with- The user can choose either play with the smart phone or a different player(friend) in the same phone.
+* Choose color disc- The game keys are two color discs- Red and Yellow, This option allows the user to select the color disc.
+* Firt turn- When play with computer or friend the first move is default by user. this option allows to switch the first move.
+* Difficulty- This option is only available when we play with computer. This difficulty level of the game.
+<img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/menu1.png" width=200px/>                    <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/menu2.png" width=200px/>
 ### Game play 
 game play goes here.
