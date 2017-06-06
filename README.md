@@ -24,6 +24,7 @@ The above characteristics are generally associated with “clean code”. Theref
 The versions of the Connect 4 Android app consists of three UI screens: 
 ### Spash 
 Splash screen is simple screen that shows the app logo and name to the user, the screen visible on each startup of th app for a two second.
+
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/splash.png" width=200px/>
 
 ### Game Menu
