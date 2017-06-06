@@ -49,7 +49,7 @@ public class WinCheckTest {
     };
     @Test
     public void testWInnerCheck(){
-        BoardLogic boardLogic = new BoardLogic(gridFoDescendingDiagonalCheck,null);
-        Assert.assertSame("Winner check failed",BoardLogic.Outcome.PLAYER2_WINS,boardLogic.checkWin());
+        BoardLogic boardLogic = new BoardLogic(gridForVerticalCheck,null);
+        Assert.assertSame("Winner check failed",BoardLogic.Outcome.PLAYER1_WINS,boardLogic.checkWin());
     }
 }
