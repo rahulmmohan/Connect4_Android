@@ -1,7 +1,8 @@
 # Connect4
 Connect Four is a two-player connection game in which the players first choose a color and then take turns dropping colored discs from the top into a seven-column, six-row vertically suspended grid. The pieces fall straight down, occupying the next available space within the column. The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own discs.
 ## GamePlay
-![Connect 4 gameplay](https://github.com/altercation/solarized/raw/master/img/solarized-palette.png)
+<iframe src="https://appetize.io/embed/0an4vqrp545hnkjma9q7g7h47m?device=nexus5&scale=75&orientation=portrait&osVersion=7.0"></iframe>
+
 
 The animation demonstrates Connect Four gameplay where the first player begins by dropping his/her yellow disc into the center column of the game board. The two players then alternate turns dropping one of their discs at a time into an unfilled column, until the second player, with red discs, achieves four discs in a row, diagonally, and wins. If the game board fills before either player achieves four in a row, then the game is a draw.
 
@@ -30,12 +31,71 @@ So far this is how our game tree looks. The 9 is crossed out because it was neve
 * B returns 5 to A. At A, alpha = max( -INF, 5) which is 5. Now the maximizer is guaranteed a value of 5 or greater. A now calls C to see if it can get a higher value than 5.
 * At C, alpha = 5 and beta = +INF. C calls F
 * At F, alpha = 5 and beta = +INF. F looks at its left child which is a 1. alpha = max( 5, 1) which is still 5.
-F looks at its right child which is a 2. Hence the best value of this node is 2. Alpha still remains 5
-F returns a value of 2 to C. At C, beta = min( +INF, 2). The condition beta <= alpha becomes false as beta = 2 and alpha = 5. So it breaks and it dose not even have to compute the entire sub-tree of G.
-The intuition behind this break off is that, at C the minimizer was guaranteed a value of 2 or lesser. But the maximizer was already guaranteed a value of 5 if he choose B. So why would the maximizer ever choose C and get a value less than 2 ? Again you can see that it did not matter what those last 2 values were. We also saved a lot of computation by skipping a whole sub tree.
-C now returns a value of 2 to A. Therefore the best value at A is max( 5, 2) which is a 5.
-Hence the optimal value that the maximizer can get is 5
+* F looks at its right child which is a 2. Hence the best value of this node is 2. Alpha still remains 5
+* F returns a value of 2 to C. At C, beta = min( +INF, 2). The condition beta <= alpha becomes false as beta = 2 and alpha = 5. So it breaks and it dose not even have to compute the entire sub-tree of G.
+* The intuition behind this break off is that, at C the minimizer was guaranteed a value of 2 or lesser. But the maximizer was already guaranteed a value of 5 if he choose B. So why would the maximizer ever choose C and get a value less than 2 ? Again you can see that it did not matter what those last 2 values were. We also saved a lot of computation by skipping a whole sub tree.
+* C now returns a value of 2 to A. Therefore the best value at A is max( 5, 2) which is a 5.
+* Hence the optimal value that the maximizer can get is 5
+
 This is how our final game tree looks like. As you can see G has been crossed out as it was never computed.
+
+### Implementation
+
+To implement this, we need some data structure that represents the entire state of a game, So we can use a 3D array with 6 rows and 7 columns. Then we need to be able to generate all the valid moves that a player can make from a given state. For connect 4 just go through each column and if it isn't full then it is a valid move. For each valid move, generate a new board state that represents the board after making that move, and then the algorithm gets recursive. We look at all the valid moves possible from after that state.
+We want to keep track of the depth we have searched to and terminate the search after it has gone down a few levels. When it reaches the maximum depth, or one of the players has won, need have a function that evaluates the board, and gives a numeric estimate of how good the board is for player 1. If player 1 won, return an extremely high value. If player 2 won, return an extremely low value.
+```
+ private Move chooseMove(int player, int opponent,
+                            int alpha, int beta, int depth) {
+        Move best = new Move(-1, player == Player.PLAYER2 ? alpha : beta);
+        // go from left to right until you find a non-full column
+        for (int i = 0; i < 7; i++) {
+            if (boardLogic.columnHeight(i) > 0) {
+                // add a counter to that column, then check for win-condition
+                boardLogic.placeMove(i, player);
+                // score this move and all its children
+                int score = 0;
+                if (boardLogic.checkMatch(i, boardLogic.columnHeight(i))) {
+                    // this move is a winning move for the player
+                    score = player == Player.PLAYER2 ? 1 : -1;
+                } else if (depth != 1) {
+                    // this move wasn't a win or a draw, so go to the next move
+                    score = chooseMove(opponent, player, alpha, beta,
+                            depth - 1).getScore();
+                }
+                boardLogic.undoMove(i);
+                // if this move beats this player's best move so far, record it
+                if (player == Player.PLAYER2 && score > best.getScore()) {
+                    best = new Move(i, score);
+                    alpha = score;
+                } else if (player == Player.PLAYER1 && score < best.getScore()) {
+                    best = new Move(i, score);
+                    beta = score;
+                }
+                // don't continue with this branch, we've already found better
+                if (alpha >= beta) {
+                    return best;
+                }
+            }
+        }
+        return best;
+    }
+```
+
+
+The idea is that two scores are passed around in the search. The first one is alpha, which is the best score that can be forced by some means. Anything worth less than this is of no use, because there is a strategy that is known to result in a score of alpha. Anything less than or equal to alpha is no improvement.
+
+The second score is beta. Beta is the worst-case scenario for the opponent. It's the worst thing that the opponent has to endure, because it's known that there is a way for the opponent to force a situation no worse than beta, from the opponent's point of view. If the search finds something that returns a score of beta or better, it's too good, so the side to move is not going to get a chance to use this strategy.
+
+When searching moves, each move searched returns a score that has some relation to alpha and beta, and the relation is very important and might mean that the search can stop and return a value.
+
+If a move results in a score that was less than or equal to alpha, it was just a bad move and it can be forgotten about, since, as I stated a few paragraphs ago, there is known to be a strategy that gets the moving side a position valued at alpha.
+
+If a move results in a score that is greater than or equal to beta, this whole node is trash, since the opponent is not going to let the side to move to achieve this position, because there is some choice the opponent can make that will avoid it. So, if we find something with a score of beta or better, it has been proven that this whole node is not going to happen, so the rest of the legal moves do not have to be searched.
+
+If a move results in a score that is greater than alpha, but less than beta, this is the move that the side to move is going to plan to play, unless something changes later on. So alpha is increased to reflect this new value.
+
+The more you give the algorithm depth levels, the more it can predict the best play in the future. So, I made the easy level have 4 levels of recursion (checks for the computer turn, the player next and the computer next) and the normal have 7 levels, and the hard have 10 levels of recursion to make better estimates while having longer processing time.
+
 
 ## Architecture
 When we googling for **"clean code"** we can find a name **Uncle Bob** is: he formulated the First Five Principles of Object Oriented Design (which were later given acronym S.O.L.I.D), was among original authors of Manifesto for Agile Software Development. Since Uncle Bob unconditionally states that the only way to move fast is to keep the code clean, and since Android does not encourage us to write clean code, it is our job as professional software developers to find ways to keep our code clean at all times.
