@@ -21,7 +21,7 @@ The above characteristics are generally associated with “clean code”. Theref
 
 ## App Workflow and Screenshots
 
-<img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/app%20flow.png" />
+<img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/app%20flow%20diagram.png" />
 
 The versions of the Connect 4 Android app consists of three UI screens: 
 ### Spash 
