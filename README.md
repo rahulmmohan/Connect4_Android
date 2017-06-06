@@ -37,12 +37,12 @@ So far this is how our game tree looks. The 9 is crossed out because it was neve
 * C now returns a value of 2 to A. Therefore the best value at A is max( 5, 2) which is a 5.
 * Hence the optimal value that the maximizer can get is 5
 
-This is how our final game tree looks like. As you can see G has been crossed out as it was never computed.
-
 ### Implementation
 
-To implement this, we need some data structure that represents the entire state of a game, So we can use a 3D array with 6 rows and 7 columns. Then we need to be able to generate all the valid moves that a player can make from a given state. For connect 4 just go through each column and if it isn't full then it is a valid move. For each valid move, generate a new board state that represents the board after making that move, and then the algorithm gets recursive. We look at all the valid moves possible from after that state.
+To implement this, we need some data structure that represents the entire state of a game, So we can use a 2D array with 6 rows and 7 columns. Then we need to able to generate all the valid moves that a player can make from a given state. For connect 4 just go through each column and if it isn't full then it is a valid move. For each valid move, generate a new board state that represents the board after making that move, and then the algorithm gets recursive. We look at all the valid moves possible from after that state.
+
 We want to keep track of the depth we have searched to and terminate the search after it has gone down a few levels. When it reaches the maximum depth, or one of the players has won, need have a function that evaluates the board, and gives a numeric estimate of how good the board is for player 1. If player 1 won, return an extremely high value. If player 2 won, return an extremely low value.
+
 ```
  private Move chooseMove(int player, int opponent,
                             int alpha, int beta, int depth) {
@@ -80,7 +80,6 @@ We want to keep track of the depth we have searched to and terminate the search 
         return best;
     }
 ```
-
 
 The idea is that two scores are passed around in the search. The first one is alpha, which is the best score that can be forced by some means. Anything worth less than this is of no use, because there is a strategy that is known to result in a score of alpha. Anything less than or equal to alpha is no improvement.
 
