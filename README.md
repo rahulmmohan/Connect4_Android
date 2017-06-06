@@ -107,9 +107,8 @@ Proper **MVC architecture** implementations have the following characteristics:
 * Code which is fun to work with
 
 The above characteristics are generally associated with “clean code”. Therefore, following Uncle Bob’s reasoning, adoption of  **MVC architecture** allows me to “go faster” with this project.
-![MVC](https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/Screen%20Shot%202017-06-04%20at%207.32.00%20PM.png)
 
-
+<img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/Screen%20Shot%202017-06-04%20at%207.32.00%20PM.png" width ="300px"/>
 ## App Workflow and Screenshots
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/app_flow_diagram.png" />
@@ -132,3 +131,23 @@ Game menu screen offer options to change the game play mode. The different optio
 Game play screen bring a board with 6 rows and 7 colum, the user can drop a disc in to any non full colum by taping on the cells. Game play screen will also show the winner status. From this window useer can either stop or resart the current play.Stoping the play will bring user to the menu screen.
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay1.png" width=200px/>                               <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay2.png" width=200px/>                               <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay3.png" width=200px/>
+
+
+### Open in Android Studio
+
+To open one of this code in Android Studio, begin by checking out one of the master branches, and then open the **Connect4_Android/** directory in Android Studio. The following series of steps illustrate how to open ths.
+
+Clone the repository:
+
+```
+git clone https://github.com/rahulmmohan/Connect4_Android.git
+```
+
+1. Open Android Studio and launch the Android SDK manager from it (Tools | Android | SDK Manager)
+1. Check that these two components are installed and updated to the latest version. Install or upgrade
+   them if necessary.
+   1. *Android SDK Platform Tools*
+   2. *Android Support Library*
+1. Return to Android Studio and select *Import Project*
+1. Select "Import from existing model - Gradle"
+1. Compile and run.
