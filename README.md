@@ -109,11 +109,13 @@ Proper **MVC architecture** implementations have the following characteristics:
 The above characteristics are generally associated with “clean code”. Therefore, following Uncle Bob’s reasoning, adoption of  **MVC architecture** allows me to “go faster” with this project.
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/Screen%20Shot%202017-06-04%20at%207.32.00%20PM.png" width ="300px"/>
+
 ## App Workflow and Screenshots
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/app_flow_diagram.png" />
 
 The versions of the Connect 4 Android app consists of three UI screens: 
+
 ### Spash Screen
 Splash screen is a simple screen that shows the app logo and name to the user, the screen visible on each startup of th app for a two second.
 
@@ -133,8 +135,7 @@ Game play screen bring a board with 6 rows and 7 colum, the user can drop a disc
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay1.png" width=200px/>                               <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay2.png" width=200px/>                               <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/gameplay3.png" width=200px/>
 
 
-### Open in Android Studio
-
+## Open in Android Studio
 To open one of this code in Android Studio, begin by checking out one of the master branches, and then open the **Connect4_Android/** directory in Android Studio. The following series of steps illustrate how to open ths.
 
 Clone the repository:
