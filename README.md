@@ -3,6 +3,16 @@
 # Connect4 <a style="margin-bottom: 0;" href='https://play.google.com/store/apps/details?id=info.overrideandroid.connect4&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="50px"/></a><a style="margin-bottom: 0;" href='https://appetize.io/embed/0an4vqrp545hnkjma9q7g7h47m?device=nexus5&scale=75&orientation=portrait&osVersion=7.0'><img alt='appetize.io' src='https://appetize.io/images/logo1_colored_background_padded_extra.png' height="50px"/></a>
 
 Connect Four is a two-player connection game in which the players first choose a color and then take turns dropping colored discs from the top into a seven-column, six-row vertically suspended grid. The pieces fall straight down, occupying the next available space within the column. The objective of the game is to be the first to form a horizontal, vertical, or diagonal line of four of one's own discs.
+
+### Get from google play
+Get the app from [Google Playstore](https://play.google.com/store/apps/details?id=info.overrideandroid.connect4)
+
+### Run on appetize.io
+Run app on the online emulators using [appetize.io](https://appetize.io/embed/0an4vqrp545hnkjma9q7g7h47m?device=nexus5&scale=75&orientation=portrait&osVersion=7.0)
+
+### Download APK
+[Download APK](https://github.com/rahulmmohan/Connect4_Android/blob/master/app/app-release.apk) from here and install on devices or emulators.
+
 ## GamePlay
 
 <img src="https://github.com/rahulmmohan/Connect4_Android/blob/master/Files/ezgif-2-355bc88733.gif" width="300px" />
@@ -139,7 +149,7 @@ Game play screen bring a board with 6 rows and 7 colum, the user can drop a disc
 
 
 ## Open in Android Studio
-To open one of this code in Android Studio, begin by checking out one of the master branches, and then open the **Connect4_Android/** directory in Android Studio. The following series of steps illustrate how to open ths.
+To open one of this code in Android Studio, begin by checking out to the master branch, and then open the **Connect4_Android/** directory in Android Studio. The following series of steps illustrate how to open ths.
 
 Clone the repository:
 
@@ -155,3 +165,12 @@ git clone https://github.com/rahulmmohan/Connect4_Android.git
 1. Return to Android Studio and select *Import Project*
 1. Select "Import from existing model - Gradle"
 1. Compile and run.
+
+## TO DO
+
+1. multiplayer support: User can compete with other player by using bluetooth or wifi.
+1. achievements and leaderboard support.
+1. tablet devices support.
+1. Android Wear support.
+
+
