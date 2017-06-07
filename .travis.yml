@@ -1,5 +1,5 @@
 language: android
-script: ./gradlew check --stacktrace
+script: ./gradlew test --stacktrace
 jdk: oraclejdk8
 android:
   components:
