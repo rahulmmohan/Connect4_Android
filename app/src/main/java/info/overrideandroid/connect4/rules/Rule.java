@@ -15,7 +15,7 @@ abstract class Rule {
 
     /**
      * Create a rule with all possible IDs
-     * @param ids
+     * @param ids possible rule array
      */
     Rule(int[] ids) {
         ruleIds = ids;
@@ -24,7 +24,7 @@ abstract class Rule {
 
     /**
      * Get current ID
-     * @return
+     * @return selected rule value
      */
     int getSelectedId(){
         return selectedId;
@@ -32,7 +32,7 @@ abstract class Rule {
 
     /**
      * set a value for ID
-     * @param id
+     * @param id rule value
      */
     void setId(int id){
         selectedId = id;

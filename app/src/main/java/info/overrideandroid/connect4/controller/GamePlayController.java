@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiPlayer;
 import info.overrideandroid.connect4.board.BoardLogic;
@@ -95,6 +96,9 @@ public class GamePlayController implements View.OnClickListener {
         }
     }
 
+    /**
+     * initialize game board with default values and player turn
+     */
     private void initialize() {
         playerTurn = gameRules.getRule(GameRules.FIRST_TURN);
 
@@ -134,7 +138,11 @@ public class GamePlayController implements View.OnClickListener {
         if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiPlayer != null) aiTurn();
     }
 
+    /**
+     * ai turn goes here
+     */
     private void aiTurn() {
+
         if (finished) return;
         new AiTask().execute();
     }
@@ -147,7 +155,7 @@ public class GamePlayController implements View.OnClickListener {
      */
     private void selectColumn(int column) {
         if (free[column] == 0) {
-            if (Constants.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 Log.e(TAG, "full column or game is finished");
             }
             return;
@@ -166,10 +174,17 @@ public class GamePlayController implements View.OnClickListener {
         checkForWin();
         //   board.displayBoard();
         aiTurn = false;
+        if (BuildConfig.DEBUG) {
+            logic.displayBoard();
+            Log.e(TAG, "Turn: " + playerTurn);
+        }
         // AI move if needed
         if (playerTurn == Player.PLAYER2 && aiPlayer != null) aiTurn();
     }
 
+    /**
+     * execute board logic for win check and update ui
+     */
     private void checkForWin() {
         outcome = logic.checkWin();
 
@@ -187,10 +202,15 @@ public class GamePlayController implements View.OnClickListener {
         ((GamePlayActivity) mContext).finish();
     }
 
+    /**
+     * restart game by resetting values and UI
+     */
     public void restartGame() {
         initialize();
         mBoardView.resetBoard();
-
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "Game restarted");
+        }
     }
 
 
@@ -198,6 +218,9 @@ public class GamePlayController implements View.OnClickListener {
     public void onClick(@NonNull View view) {
         if (finished || aiTurn) return;
         int col = mBoardView.colAtX(view.getX());
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "Selected column: " + col);
+        }
         selectColumn(col);
     }
 
@@ -217,8 +240,9 @@ public class GamePlayController implements View.OnClickListener {
                 Thread.currentThread();
                 Thread.sleep(Constants.AI_DELAY);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                if (BuildConfig.DEBUG) {
+                    e.printStackTrace();
+                }
             }
             return aiPlayer.getColumn();
         }

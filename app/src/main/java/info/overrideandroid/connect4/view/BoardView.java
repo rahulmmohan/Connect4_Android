@@ -3,6 +3,7 @@ package info.overrideandroid.connect4.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GamePlayController;
 import info.overrideandroid.connect4.board.BoardLogic;
@@ -27,7 +29,7 @@ import static info.overrideandroid.connect4.controller.GamePlayController.ROWS;
 
 public class BoardView extends RelativeLayout {
 
-
+    private static final String TAG = GamePlayController.class.getName();
     private GameRules gameRules;
     private GamePlayController listener;
 
@@ -100,7 +102,7 @@ public class BoardView extends RelativeLayout {
     }
 
     /**
-     * initialize player1 information with Gamerules
+     * initialize player1 information with Gameules
      */
     private void setPlayer1() {
         player1.disc.setImageResource(gameRules.getRule(GameRules.DISC));
@@ -108,7 +110,7 @@ public class BoardView extends RelativeLayout {
     }
 
     /**
-     * initialize player2 information with Gamerules
+     * initialize player2 information with Gameules
      */
     private void setPlayer2() {
         player2.disc.setImageResource(gameRules.getRule(GameRules.DISC2));
@@ -150,8 +152,8 @@ public class BoardView extends RelativeLayout {
     /**
      * Drop a disc of the current player at available row of selected column
      *
-     * @param col
-     * @param row
+     * @param col column to drop disc
+     * @param row row of the column
      */
     public void dropDisc(int row, int col, final int playerTurn) {
         final ImageView cell = cells[row][col];
@@ -175,7 +177,7 @@ public class BoardView extends RelativeLayout {
     /**
      * toggle player indicator
      *
-     * @param playerTurn
+     * @param playerTurn next players value
      */
     public void togglePlayer(int playerTurn) {
         player1.turnIndicator.setVisibility(playerTurn == Player.PLAYER1 ? VISIBLE : INVISIBLE);
@@ -185,11 +187,13 @@ public class BoardView extends RelativeLayout {
     /**
      * Update UI with winning status
      *
-     * @param outcome
-     * @param winDiscs
+     * @param outcome winning status
+     * @param winDiscs winning move discs
      */
     public void showWinStatus(@NonNull BoardLogic.Outcome outcome, @NonNull ArrayList<ImageView> winDiscs) {
-
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG,outcome.name());
+        }
         if(outcome != BoardLogic.Outcome.NOTHING) {
 
             winnerView.setVisibility(VISIBLE);

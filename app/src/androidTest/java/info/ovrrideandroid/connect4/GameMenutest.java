@@ -38,7 +38,7 @@ public class GameMenutest {
     public ActivityTestRule<GameMenuActivity> mActivityTestRule = new ActivityTestRule<>(GameMenuActivity.class);
 
     @Test
-    public void gameMenutest() {
+    public void gameMenuTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html

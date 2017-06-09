@@ -39,12 +39,12 @@ public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekB
             case R.id.play_with_ai:
                 gameRules.setRule(GameRules.OPPONENT, Opponent.AI);
                 menuView.setPlayWith(gameRules.getRule(GameRules.OPPONENT));
-                menuView.setDificulty(gameRules.getRule(GameRules.LEVEL));
+                menuView.setDifficulty(gameRules.getRule(GameRules.LEVEL));
                 break;
             case R.id.play_with_friend:
                 gameRules.setRule(GameRules.OPPONENT, Opponent.PLAYER);
                 menuView.setPlayWith(gameRules.getRule(GameRules.OPPONENT));
-                menuView.setDificulty(gameRules.getRule(GameRules.LEVEL));
+                menuView.setDifficulty(gameRules.getRule(GameRules.LEVEL));
                 break;
             case R.id.disc_red:
                 gameRules.setRule(GameRules.DISC, Disc.RED);

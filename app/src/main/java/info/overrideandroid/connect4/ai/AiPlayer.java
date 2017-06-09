@@ -1,8 +1,11 @@
 package info.overrideandroid.connect4.ai;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.board.BoardLogic;
+import info.overrideandroid.connect4.controller.GamePlayController;
 import info.overrideandroid.connect4.rules.Player;
 
 /**
@@ -10,38 +13,48 @@ import info.overrideandroid.connect4.rules.Player;
  */
 
 public class AiPlayer {
+    private static final String TAG = GamePlayController.class.getName();
 
     private final BoardLogic boardLogic;
+
     private int maxDepth;
 
     public AiPlayer(BoardLogic boardLogic) {
         this.boardLogic = boardLogic;
     }
 
+    /**
+     *  set difficulty of playing with ai
+     * @param depth maximum depth ai will search for best move
+     */
     public void setDifficulty(int depth) {
         this.maxDepth = depth;
     }
 
+    /**
+     * run ai move
+     * @return column to put AI disc
+     */
     public int getColumn() {
         return chooseMove(Player.PLAYER2, Player.PLAYER1, -10000, 10000, maxDepth).getColumn();
     }
 
     /**
-     * Recursive minimax method
+     * Recursive minmax method
      *
      * @param player   player taking their move at this level of the tree
      * @param opponent player NOT taking their move at this level of the tree
      * @param alpha    the best score this AIPlayer object can achieve
      * @param beta     the best score the other player can achieve
      * @param depth    the current depth in the tree, 0 is a leaf node
-     * @return
+     * @return best move
      */
     @NonNull
     private Move chooseMove(int player, int opponent,
                             int alpha, int beta, int depth) {
         Move best = new Move(-1, player == Player.PLAYER2 ? alpha : beta);
         // go from left to right until you find a non-full column
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < boardLogic.numCols; i++) {
             if (boardLogic.columnHeight(i) > 0) {
                 // add a counter to that column, then check for win-condition
                 boardLogic.placeMove(i, player);
@@ -69,6 +82,9 @@ public class AiPlayer {
                     return best;
                 }
             }
+        }
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "best move "+best.getColumn());
         }
         return best;
     }

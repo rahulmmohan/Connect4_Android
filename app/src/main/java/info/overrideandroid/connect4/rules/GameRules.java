@@ -64,7 +64,7 @@ public class GameRules {
         }
     }
 
-    /*
+    /**
      * All possible rules
      */
     public static final int FIRST_TURN = 0;
@@ -96,7 +96,7 @@ public class GameRules {
      * Returns current rule state
      *
      * @param rule
-     * @return
+     * @return return selected value
      */
     public int getRule(int rule) {
         return rules[rule].getSelectedId();
@@ -105,12 +105,13 @@ public class GameRules {
     /**
      * Sets new rule state
      *
-     * @param rule
-     * @param value
+     * @param rule game rule to set value
+     * @param value rule value
      */
     public void setRule(int rule, int value) {
         rules[rule].setId(value);
     }
+
 
     @NonNull
     public Bundle exportTo(@NonNull Bundle bundle) {

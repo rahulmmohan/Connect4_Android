@@ -29,6 +29,10 @@ public class MenuView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * Listener for menu events
+     * @param gameMenuController game menu controller instance
+     */
     public void setListeners(GameMenuController gameMenuController) {
 
         findViewById(R.id.play).setOnClickListener(gameMenuController);
@@ -39,8 +43,12 @@ public class MenuView extends RelativeLayout {
 
     }
 
-    public void setPlayWith(int rule){
-        if(rule == Opponent.AI){
+    /**
+     * change opponent
+     * @param opponent game rule - first turn value
+     */
+    public void setPlayWith(int opponent){
+        if(opponent == Opponent.AI){
             ((RadioGroup) findViewById(R.id.play_with)).check(R.id.play_with_ai);
             findViewById(R.id.level).setVisibility(VISIBLE);
             ((RadioButton) findViewById(R.id.first_turn_player2)).setText(getContext().getString(R.string.opponent_ai));
@@ -52,29 +60,48 @@ public class MenuView extends RelativeLayout {
 
         }
     }
-    private void setFirstTurn(int rule){
-        if(rule == FirstTurn.PLAYER1){
+
+    /**
+     * change first turn
+     * @param firstTurn game rule - first turn value
+     */
+    private void setFirstTurn(int firstTurn){
+        if(firstTurn == FirstTurn.PLAYER1){
             ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player1);
         }else {
             ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player2);
         }
     }
-    private void setPLayer1Disc(int rule){
-        if(rule == Disc.RED){
+
+    /**
+     * change disc selection
+     * @param PLayer1Disc game rule - Player1 disc value
+     */
+    private void setPLayer1Disc(int PLayer1Disc){
+        if(PLayer1Disc == Disc.RED){
             ((RadioGroup) findViewById(R.id.player1_disc)).check(R.id.disc_red);
         }else {
             ((RadioGroup) findViewById(R.id.player1_disc)).check(R.id.disc_yellow);
         }
     }
-    public void setDificulty(int rule){
-        ((SeekBar) findViewById(R.id.difficulty)).setProgress(rule);
+
+    /**
+     * change difficulty ui
+     * @param difficulty game rule - difficulty value
+     */
+    public void setDifficulty(int difficulty){
+        ((SeekBar) findViewById(R.id.difficulty)).setProgress(difficulty);
     }
 
+    /**
+     * set menu with default rules
+     * @param defaultGameRules default game rule
+     */
     public void setupMenu(@NonNull GameRules defaultGameRules) {
         setPlayWith(defaultGameRules.getRule(GameRules.OPPONENT));
         setFirstTurn(defaultGameRules.getRule(GameRules.FIRST_TURN));
         setPLayer1Disc(defaultGameRules.getRule(GameRules.DISC));
-        setDificulty(defaultGameRules.getRule(GameRules.LEVEL));
+        setDifficulty(defaultGameRules.getRule(GameRules.LEVEL));
 
     }
 }

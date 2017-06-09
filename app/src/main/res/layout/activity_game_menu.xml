@@ -182,6 +182,6 @@
         android:background="@color/colorPrimary"
         android:text="@string/play"
         android:textColor="@color/white"
-        android:textSize="23sp"
+        android:textSize="@dimen/play_font_size"
         android:textStyle="bold" />
 </info.overrideandroid.connect4.view.MenuView>

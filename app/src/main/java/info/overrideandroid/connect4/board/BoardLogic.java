@@ -1,10 +1,13 @@
 package info.overrideandroid.connect4.board;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import info.overrideandroid.connect4.BuildConfig;
+import info.overrideandroid.connect4.controller.GamePlayController;
 import info.overrideandroid.connect4.rules.Player;
 
 /**
@@ -12,6 +15,8 @@ import info.overrideandroid.connect4.rules.Player;
  */
 
 public class BoardLogic {
+    private static final String TAG = GamePlayController.class.getName();
+
     /**
      * Possible outcomes
      */
@@ -38,7 +43,7 @@ public class BoardLogic {
     /**
      * number of columns in the grid
      */
-    private final int numCols;
+    public final int numCols;
 
     /**
      * number of rows in the grid
@@ -62,9 +67,14 @@ public class BoardLogic {
     private final int[] free;
 
     /**
+     * win counter
+     */
+    private static final int COUNTERS_IN_MATCH = 4;
+
+    /**
      * Initialise members
-     *
      * @param _grid
+     * @param free
      */
     public BoardLogic(@NonNull int[][] _grid, int[] free) {
         grid = _grid;
@@ -93,6 +103,9 @@ public class BoardLogic {
                 cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i][j + 1] == cellValue && grid[i][j + 2] == cellValue && grid[i][j + 3] == cellValue) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Horizontal check pass");
+                    }
                     p = i;
                     q = j;
                     WIN_X = 1;
@@ -111,6 +124,9 @@ public class BoardLogic {
                 cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i + 1][j] == cellValue && grid[i + 2][j] == cellValue && grid[i + 3][j] == cellValue) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Horizontal check pass");
+                    }
                     p = i;
                     q = j;
                     WIN_X = 0;
@@ -129,6 +145,9 @@ public class BoardLogic {
                 cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i - 1][j + 1] == cellValue && grid[i - 2][j + 2] == cellValue && grid[i - 3][j + 3] == cellValue) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Horizontal check pass");
+                    }
                     p = i;
                     q = j;
                     WIN_X = 1;
@@ -147,6 +166,9 @@ public class BoardLogic {
                 cellValue = grid[i][j];
                 if (cellValue == 0) draw = false;
                 if (cellValue != 0 && grid[i - 1][j - 1] == cellValue && grid[i - 2][j - 2] == cellValue && grid[i - 3][j - 3] == cellValue) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Horizontal check pass");
+                    }
                     p = i;
                     q = j;
                     WIN_X = -1;
@@ -161,9 +183,8 @@ public class BoardLogic {
     /**
      * Returns sprites of a winning combination
      *
-     * @param
-     * @param cells
-     * @return
+     * @param cells cell grid
+     * @return winning move discs
      */
     @NonNull
     public ArrayList<ImageView> getWinDiscs(ImageView[][] cells) {
@@ -188,7 +209,7 @@ public class BoardLogic {
     /**
      * undo previous move
      *
-     * @param column
+     * @param column column to undo move
      */
     public void undoMove(int column) {
         if (free[column] < numRows) {
@@ -223,61 +244,61 @@ public class BoardLogic {
         int backward_diagonal_matches = 0;
 
         // horizontal matches
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column + i, row)) {
                 horizontal_matches++;
             } else break;
         }
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column - i, row)) {
                 horizontal_matches++;
             } else break;
         }
 
         // vertical matches
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column, row + i)) {
                 vertical_matches++;
             } else break;
         }
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column, row - i)) {
                 vertical_matches++;
             } else break;
         }
 
         // backward diagonal matches ( \ )
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column + i, row - i)) {
                 backward_diagonal_matches++;
             } else break;
         }
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column - i, row + i)) {
                 backward_diagonal_matches++;
             } else break;
         }
 
         // forward diagonal matches ( / )
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column + i, row + i)) {
                 forward_diagonal_matches++;
             } else break;
         }
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < COUNTERS_IN_MATCH; i++) {
             if (matchingCounters(column, row, column - i, row - i)) {
                 forward_diagonal_matches++;
             } else break;
         }
 
-        return horizontal_matches >= 3
-                || vertical_matches >= 3
-                || forward_diagonal_matches >= 3
-                || backward_diagonal_matches >= 3;
+        return horizontal_matches >= COUNTERS_IN_MATCH-1
+                || vertical_matches >= COUNTERS_IN_MATCH-1
+                || forward_diagonal_matches >= COUNTERS_IN_MATCH-1
+                || backward_diagonal_matches >= COUNTERS_IN_MATCH-1;
     }
 
     /**
@@ -288,7 +309,7 @@ public class BoardLogic {
      * @param rowA    row the first counter is in
      * @param columnB column the second counter is in
      * @param rowB    row the second counter is in
-     * @return
+     * @return true if there is matching
      */
     private boolean matchingCounters(int columnA, int rowA, int columnB, int rowB) {
         // return false if either set of coordinates falls out of bounds
@@ -301,11 +322,14 @@ public class BoardLogic {
         return !(grid[rowA][columnA] == 0 || grid[rowB][columnB] == 0) && grid[rowA][columnA] == grid[rowB][columnB];
     }
 
-    public void displayBoard(){
+    /**
+     * display board status
+     */
+    public void displayBoard() {
         System.out.println();
-        for(int i=0;i<=5;++i){
-            for(int j=0;j<=6;++j){
-                System.out.print(grid[i][j]+" ");
+        for (int i = 0; i <= 5; ++i) {
+            for (int j = 0; j <= 6; ++j) {
+                System.out.print(grid[i][j] + " ");
             }
             System.out.println();
         }
