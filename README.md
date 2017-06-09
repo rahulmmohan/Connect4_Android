@@ -177,5 +177,11 @@ git clone https://github.com/rahulmmohan/Connect4_Android.git
 1. Tablet devices support.
 1. Android Wear support.
  
+ ## See my other projects
+ ### Whirly bird
+ A simple helicopter game, based on the Spectacular flappy bird game built with the libgdx.
+ [Google Playstore](https://play.google.com/store/apps/details?id=games.factory72.whirly_8)
  
+ ### Override Android
+ Android development tutorial blog - www.overrideandroid.info
  
