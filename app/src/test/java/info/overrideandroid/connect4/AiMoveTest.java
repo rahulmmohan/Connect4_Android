@@ -18,14 +18,16 @@ public class AiMoveTest {
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
             {0,0,0,0,0,0,0,},
-            {1,0,2,0,0,0,0,},
-            {1,1,2,2,2,0,0,},
+            {2,0,1,0,0,0,0,},
+            {2,2,1,1,1,0,0,},
     };
 
     @Test
     public void testAiMove(){
         BoardLogic boardLogic =new BoardLogic(grid,free);
         AiPlayer aiPlayer = new AiPlayer(boardLogic);
-        Assert.assertEquals(5,aiPlayer.getColumn());
+        aiPlayer.setDifficulty(10);
+        int columExpected = 5;
+        Assert.assertEquals(columExpected,aiPlayer.getColumn());
     }
 }
