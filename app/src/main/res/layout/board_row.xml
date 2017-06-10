@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/red_disc" />
+         />
 
     <ImageView
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/yellow_disc" />
+         />
 
     <ImageView
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/red_disc" />
+         />
 
     <ImageView
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/yellow_disc" />
+         />
 
     <ImageView
         android:background="?attr/selectableItemBackground"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/yellow_disc" />
+         />
 
     <ImageView
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -58,5 +58,5 @@
         android:layout_height="wrap_content"
         android:layout_weight=".17"
         android:adjustViewBounds="true"
-        android:src="@drawable/red_disc" />
+         />
 </LinearLayout>

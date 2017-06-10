@@ -20,6 +20,8 @@ import info.overrideandroid.connect4.rules.Player;
 import info.overrideandroid.connect4.utils.Constants;
 import info.overrideandroid.connect4.view.BoardView;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by Rahul on 30/05/17.
  */
@@ -38,41 +40,41 @@ public class GamePlayController implements View.OnClickListener {
     public static final int ROWS = 6;
 
     /**
-     * grid, contains 0 for empty cell or player ID
+     * mGrid, contains 0 for empty cell or player ID
      */
-    private final int[][] grid = new int[ROWS][COLS];
+    private final int[][] mGrid = new int[ROWS][COLS];
 
     /**
-     * free cells in every column
+     * mFree cells in every column
      */
-    private final int[] free = new int[COLS];
+    private final int[] mFree = new int[COLS];
 
     /**
-     * board logic (winning check)
+     * board mBoardLogic (winning check)
      */
-    private final BoardLogic logic = new BoardLogic(grid, free);
+    private final BoardLogic mBoardLogic = new BoardLogic(mGrid, mFree);
 
     /**
      * Instance of Ai player
      */
     @Nullable
-    private AiPlayer aiPlayer;
+    private AiPlayer mAiPlayer;
 
     /**
      * current status
      */
     @NonNull
-    private Outcome outcome = Outcome.NOTHING;
+    private Outcome mOutcome = Outcome.NOTHING;
 
     /**
-     * if the game is finished
+     * if the game is mFinished
      */
-    private boolean finished = true;
+    private boolean mFinished = true;
 
     /**
      * player turn
      */
-    private int playerTurn;
+    private int mPlayerTurn;
 
     private final Context mContext;
 
@@ -82,17 +84,17 @@ public class GamePlayController implements View.OnClickListener {
      * Game rules
      */
     @NonNull
-    private final GameRules gameRules;
+    private final GameRules mGameRules;
 
-    private boolean aiTurn;
+    private boolean mAiTurn;
 
-    public GamePlayController(Context context, BoardView boardView, @NonNull GameRules gameRules) {
+    public GamePlayController(Context context, BoardView boardView, @NonNull GameRules mGameRules) {
         this.mContext = context;
-        this.gameRules = gameRules;
+        this.mGameRules = mGameRules;
         this.mBoardView = boardView;
         initialize();
         if (mBoardView != null) {
-            mBoardView.initialize(this, gameRules);
+            mBoardView.initialize(this, mGameRules);
         }
     }
 
@@ -100,42 +102,42 @@ public class GamePlayController implements View.OnClickListener {
      * initialize game board with default values and player turn
      */
     private void initialize() {
-        playerTurn = gameRules.getRule(GameRules.FIRST_TURN);
+        mPlayerTurn = mGameRules.getRule(GameRules.FIRST_TURN);
 
         // unfinished the game
-        finished = false;
-        outcome = Outcome.NOTHING;
-        // null the grid and free counter for every column
+        mFinished = false;
+        mOutcome = Outcome.NOTHING;
+        // null the mGrid and mFree counter for every column
         for (int j = 0; j < COLS; ++j) {
             for (int i = 0; i < ROWS; ++i) {
-                grid[i][j] = 0;
+                mGrid[i][j] = 0;
             }
-            free[j] = ROWS;
+            mFree[j] = ROWS;
         }
 
         // create AI if needed
-        if (gameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
-            aiPlayer = new AiPlayer(logic);
-            switch (gameRules.getRule(GameRules.LEVEL)) {
+        if (mGameRules.getRule(GameRules.OPPONENT) == GameRules.Opponent.AI) {
+            mAiPlayer = new AiPlayer(mBoardLogic);
+            switch (mGameRules.getRule(GameRules.LEVEL)) {
                 case GameRules.Level.EASY:
-                    aiPlayer.setDifficulty(4);
+                    mAiPlayer.setDifficulty(4);
                     break;
                 case GameRules.Level.NORMAL:
-                    aiPlayer.setDifficulty(7);
+                    mAiPlayer.setDifficulty(7);
                     break;
                 case GameRules.Level.HARD:
-                    aiPlayer.setDifficulty(10);
+                    mAiPlayer.setDifficulty(10);
                     break;
                 default:
-                    aiPlayer = null;
+                    mAiPlayer = null;
                     break;
             }
         } else {
-            aiPlayer = null;
+            mAiPlayer = null;
         }
 
         // if it is a computer turn, go ahead with it
-        if (playerTurn == GameRules.FirstTurn.PLAYER2 && aiPlayer != null) aiTurn();
+        if (mPlayerTurn == GameRules.FirstTurn.PLAYER2 && mAiPlayer != null) aiTurn();
     }
 
     /**
@@ -143,7 +145,7 @@ public class GamePlayController implements View.OnClickListener {
      */
     private void aiTurn() {
 
-        if (finished) return;
+        if (mFinished) return;
         new AiTask().execute();
     }
 
@@ -151,50 +153,50 @@ public class GamePlayController implements View.OnClickListener {
     /**
      * drop disc into a column
      *
-     * @param column
+     * @param column column to drop disc
      */
     private void selectColumn(int column) {
-        if (free[column] == 0) {
+        if (mFree[column] == 0) {
             if (BuildConfig.DEBUG) {
-                Log.e(TAG, "full column or game is finished");
+                Log.e(TAG, "full column or game is mFinished");
             }
             return;
         }
 
-        logic.placeMove(column, playerTurn);
+        mBoardLogic.placeMove(column, mPlayerTurn);
 
         // put disc
-        mBoardView.dropDisc(free[column], column, playerTurn);
+        mBoardView.dropDisc(mFree[column], column, mPlayerTurn);
 
         // switch player
-        playerTurn = playerTurn == Player.PLAYER1
+        mPlayerTurn = mPlayerTurn == Player.PLAYER1
                 ? Player.PLAYER2 : Player.PLAYER1;
 
         // check if someone has won
         checkForWin();
         //   board.displayBoard();
-        aiTurn = false;
+        mAiTurn = false;
         if (BuildConfig.DEBUG) {
-            logic.displayBoard();
-            Log.e(TAG, "Turn: " + playerTurn);
+            mBoardLogic.displayBoard();
+            Log.e(TAG, "Turn: " + mPlayerTurn);
         }
         // AI move if needed
-        if (playerTurn == Player.PLAYER2 && aiPlayer != null) aiTurn();
+        if (mPlayerTurn == Player.PLAYER2 && mAiPlayer != null) aiTurn();
     }
 
     /**
-     * execute board logic for win check and update ui
+     * execute board mBoardLogic for win check and update ui
      */
     private void checkForWin() {
-        outcome = logic.checkWin();
+        mOutcome = mBoardLogic.checkWin();
 
-        if (outcome != Outcome.NOTHING) {
-            finished = true;
-            ArrayList<ImageView> winDiscs = logic.getWinDiscs(mBoardView.getCells());
-            mBoardView.showWinStatus(outcome, winDiscs);
+        if (mOutcome != Outcome.NOTHING) {
+            mFinished = true;
+            ArrayList<ImageView> winDiscs = mBoardLogic.getWinDiscs(mBoardView.getCells());
+            mBoardView.showWinStatus(mOutcome, winDiscs);
 
         } else {
-            mBoardView.togglePlayer(playerTurn);
+            mBoardView.togglePlayer(mPlayerTurn);
         }
     }
 
@@ -216,7 +218,7 @@ public class GamePlayController implements View.OnClickListener {
 
     @Override
     public void onClick(@NonNull View view) {
-        if (finished || aiTurn) return;
+        if (mFinished || mAiTurn) return;
         int col = mBoardView.colAtX(view.getX());
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "Selected column: " + col);
@@ -231,20 +233,20 @@ public class GamePlayController implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            aiTurn = true;
+            mAiTurn = true;
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
             try {
                 Thread.currentThread();
-                Thread.sleep(Constants.AI_DELAY);
+                sleep(Constants.AI_DELAY);
             } catch (InterruptedException e) {
                 if (BuildConfig.DEBUG) {
                     e.printStackTrace();
                 }
             }
-            return aiPlayer.getColumn();
+            return mAiPlayer.getColumn();
         }
 
         @Override

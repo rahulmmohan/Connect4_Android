@@ -17,48 +17,48 @@ import info.overrideandroid.connect4.view.MenuView;
  */
 
 public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener {
-    private final MenuView menuView;
-    private final MenuControllerListener listener;
-    private final GameRules gameRules = new GameRules();
+    private final MenuView mMenuView;
+    private final MenuControllerListener mListener;
+    private final GameRules mGameRules = new GameRules();
 
-    public GameMenuController(MenuControllerListener listener, MenuView menuView) {
-        this.menuView = menuView;
-        this.listener = listener;
-        this.menuView.setupMenu(getDefaultGameRules());
+    public GameMenuController(MenuControllerListener mListener, MenuView mMenuView) {
+        this.mMenuView = mMenuView;
+        this.mListener = mListener;
+        this.mMenuView.setupMenu(getDefaultGameRules());
     }
 
 
     @Override
     public void onClick(View v) {
-        listener.onPlay(gameRules);
+        mListener.onPlay(mGameRules);
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.play_with_ai:
-                gameRules.setRule(GameRules.OPPONENT, Opponent.AI);
-                menuView.setPlayWith(gameRules.getRule(GameRules.OPPONENT));
-                menuView.setDifficulty(gameRules.getRule(GameRules.LEVEL));
+                mGameRules.setRule(GameRules.OPPONENT, Opponent.AI);
+                mMenuView.setPlayWith(mGameRules.getRule(GameRules.OPPONENT));
+                mMenuView.setDifficulty(mGameRules.getRule(GameRules.LEVEL));
                 break;
             case R.id.play_with_friend:
-                gameRules.setRule(GameRules.OPPONENT, Opponent.PLAYER);
-                menuView.setPlayWith(gameRules.getRule(GameRules.OPPONENT));
-                menuView.setDifficulty(gameRules.getRule(GameRules.LEVEL));
+                mGameRules.setRule(GameRules.OPPONENT, Opponent.PLAYER);
+                mMenuView.setPlayWith(mGameRules.getRule(GameRules.OPPONENT));
+                mMenuView.setDifficulty(mGameRules.getRule(GameRules.LEVEL));
                 break;
             case R.id.disc_red:
-                gameRules.setRule(GameRules.DISC, Disc.RED);
-                gameRules.setRule(GameRules.DISC2, Disc.YELLOW);
+                mGameRules.setRule(GameRules.DISC, Disc.RED);
+                mGameRules.setRule(GameRules.DISC2, Disc.YELLOW);
                 break;
             case R.id.disc_yellow:
-                gameRules.setRule(GameRules.DISC2, Disc.RED);
-                gameRules.setRule(GameRules.DISC, Disc.YELLOW);
+                mGameRules.setRule(GameRules.DISC2, Disc.RED);
+                mGameRules.setRule(GameRules.DISC, Disc.YELLOW);
                 break;
             case R.id.first_turn_player1:
-                gameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
+                mGameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
                 break;
             case R.id.first_turn_player2:
-                gameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER2);
+                mGameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER2);
                 break;
 
         }
@@ -67,7 +67,7 @@ public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekB
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        gameRules.setRule(GameRules.LEVEL, progress);
+        mGameRules.setRule(GameRules.LEVEL, progress);
     }
 
     @Override
@@ -82,12 +82,12 @@ public class GameMenuController implements View.OnClickListener, SeekBar.OnSeekB
 
     @NonNull
     private GameRules getDefaultGameRules() {
-        gameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
-        gameRules.setRule(GameRules.LEVEL, GameRules.Level.HARD);
-        gameRules.setRule(GameRules.OPPONENT, Opponent.AI);
-        gameRules.setRule(GameRules.DISC, GameRules.Disc.RED);
-        gameRules.setRule(GameRules.DISC2, GameRules.Disc.YELLOW);
-        return gameRules;
+        mGameRules.setRule(GameRules.FIRST_TURN, FirstTurn.PLAYER1);
+        mGameRules.setRule(GameRules.LEVEL, GameRules.Level.HARD);
+        mGameRules.setRule(GameRules.OPPONENT, Opponent.AI);
+        mGameRules.setRule(GameRules.DISC, GameRules.Disc.RED);
+        mGameRules.setRule(GameRules.DISC2, GameRules.Disc.YELLOW);
+        return mGameRules;
     }
 
 

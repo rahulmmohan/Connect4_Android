@@ -8,4 +8,5 @@
     <dimen name="seekbar_text_size">17sp</dimen>
     <dimen name="app_title">50sp</dimen>
     <dimen name="play_font_size">25sp</dimen>
+    <dimen name="player_indicator_image_size">42dp</dimen>
 </resources>

@@ -15,12 +15,12 @@ import info.overrideandroid.connect4.rules.Player;
 public class AiPlayer {
     private static final String TAG = GamePlayController.class.getName();
 
-    private final BoardLogic boardLogic;
+    private final BoardLogic mBoardLogic;
 
-    private int maxDepth;
+    private int mMaxDepth;
 
     public AiPlayer(BoardLogic boardLogic) {
-        this.boardLogic = boardLogic;
+        this.mBoardLogic = boardLogic;
     }
 
     /**
@@ -28,7 +28,7 @@ public class AiPlayer {
      * @param depth maximum depth ai will search for best move
      */
     public void setDifficulty(int depth) {
-        this.maxDepth = depth;
+        this.mMaxDepth = depth;
     }
 
     /**
@@ -36,7 +36,7 @@ public class AiPlayer {
      * @return column to put AI disc
      */
     public int getColumn() {
-        return chooseMove(Player.PLAYER2, Player.PLAYER1, -10000, 10000, maxDepth).getColumn();
+        return chooseMove(Player.PLAYER2, Player.PLAYER1, -10000, 10000, mMaxDepth).getColumn();
     }
 
     /**
@@ -54,13 +54,13 @@ public class AiPlayer {
                             int alpha, int beta, int depth) {
         Move best = new Move(-1, player == Player.PLAYER2 ? alpha : beta);
         // go from left to right until you find a non-full column
-        for (int i = 0; i < boardLogic.numCols; i++) {
-            if (boardLogic.columnHeight(i) > 0) {
+        for (int i = 0; i < mBoardLogic.numCols; i++) {
+            if (mBoardLogic.columnHeight(i) > 0) {
                 // add a counter to that column, then check for win-condition
-                boardLogic.placeMove(i, player);
+                mBoardLogic.placeMove(i, player);
                 // score this move and all its children
                 int score = 0;
-                if (boardLogic.checkMatch(i, boardLogic.columnHeight(i))) {
+                if (mBoardLogic.checkMatch(i, mBoardLogic.columnHeight(i))) {
                     // this move is a winning move for the player
                     score = player == Player.PLAYER2 ? 1 : -1;
                 } else if (depth != 1) {
@@ -68,7 +68,7 @@ public class AiPlayer {
                     score = chooseMove(opponent, player, alpha, beta,
                             depth - 1).getScore();
                 }
-                boardLogic.undoMove(i);
+                mBoardLogic.undoMove(i);
                 // if this move beats this player's best move so far, record it
                 if (player == Player.PLAYER2 && score > best.getScore()) {
                     best = new Move(i, score);

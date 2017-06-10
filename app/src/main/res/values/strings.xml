@@ -25,4 +25,6 @@
     <string name="choose_your_color">CHOOSE YOUR COLOR</string>
     <string name="first_turn">FIRST TURN</string>
     <string name="difficulty">DIFFICULTY</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

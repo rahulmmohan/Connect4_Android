@@ -10,21 +10,22 @@ import android.view.MenuItem;
 
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GamePlayController;
-import info.overrideandroid.connect4.view.BoardView;
 import info.overrideandroid.connect4.rules.GameRules;
+import info.overrideandroid.connect4.view.BoardView;
 
 public class GamePlayActivity extends AppCompatActivity {
 
-    private GamePlayController gameController;
-    private final GameRules gameRules = new GameRules();
+    private GamePlayController mGameController;
+    private final GameRules mGameRules = new GameRules();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         BoardView boardView = (BoardView) findViewById(R.id.gameView);
-        gameRules.importFrom(getIntent().getExtras());
-        gameController = new GamePlayController(this, boardView, gameRules);
+        mGameRules.importFrom(getIntent().getExtras());
+        mGameController = new GamePlayController(this, boardView, mGameRules);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
     }
@@ -39,20 +40,10 @@ public class GamePlayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                exitPlay();
+                showAlert(R.string.back);
                 break;
             case R.id.restart:
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(R.string.reset_game)
-                        .setCancelable(false)
-                        .setNegativeButton("No",null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                gameController.restartGame();
-                            }
-                        }).show();
+                showAlert(R.string.reset_game);
                 break;
             default:
                 break;
@@ -60,22 +51,26 @@ public class GamePlayActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void exitPlay() {
+    private void showAlert(final int msgId) {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.app_name))
-                .setMessage(R.string.back)
+                .setMessage(msgId)
                 .setCancelable(false)
-                .setNegativeButton("No",null)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        gameController.exitGame();
+                        if (msgId == R.string.back) {
+                            mGameController.exitGame();
+                        } else {
+                            mGameController.restartGame();
+                        }
                     }
                 }).show();
     }
 
     @Override
     public void onBackPressed() {
-        exitPlay();
+        showAlert(R.string.back);
     }
 }

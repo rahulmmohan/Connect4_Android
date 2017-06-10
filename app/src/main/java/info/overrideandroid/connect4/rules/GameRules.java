@@ -95,7 +95,7 @@ public class GameRules {
     /**
      * Returns current rule state
      *
-     * @param rule
+     * @param rule rule to get selected value
      * @return return selected value
      */
     public int getRule(int rule) {

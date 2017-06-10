@@ -25,28 +25,28 @@ public class BoardLogic {
     }
 
     /**
-     * flag to mark draw
+     * flag to mark mDraw
      */
-    private boolean draw;
+    private boolean mDraw;
 
     /**
      * Reference to player win
      */
-    private int cellValue;
+    private int mCellValue;
 
     /**
-     * Reference to a main grid
+     * Reference to a main mGrid
      */
     @NonNull
-    private final int[][] grid;
+    private final int[][] mGrid;
 
     /**
-     * number of columns in the grid
+     * number of columns in the mGrid
      */
     public final int numCols;
 
     /**
-     * number of rows in the grid
+     * number of rows in the mGrid
      */
     private final int numRows;
 
@@ -62,9 +62,9 @@ public class BoardLogic {
     private int WIN_Y = 0;
 
     /**
-     * reference to free cells in every column
+     * reference to mFree cells in every column
      */
-    private final int[] free;
+    private final int[] mFree;
 
     /**
      * win counter
@@ -73,26 +73,27 @@ public class BoardLogic {
 
     /**
      * Initialise members
-     * @param _grid
-     * @param free
+     *
+     * @param grid reference to board grid
+     * @param free reference to column height
      */
-    public BoardLogic(@NonNull int[][] _grid, int[] free) {
-        grid = _grid;
-        numRows = _grid.length;
-        numCols = _grid[0].length;
-        this.free = free;
+    public BoardLogic(@NonNull int[][] grid, int[] free) {
+        mGrid = grid;
+        numRows = grid.length;
+        numCols = grid[0].length;
+        this.mFree = free;
     }
 
     @NonNull
     public Outcome checkWin() {
-        draw = true;
-        cellValue = 0;
+        mDraw = true;
+        mCellValue = 0;
         if (horizontalCheck() || verticalCheck() ||
                 ascendingDiagonalCheck() || descendingDiagonalCheck()) {
-            return cellValue == Player.PLAYER1 ? Outcome.PLAYER1_WINS : Outcome.PLAYER2_WINS;
+            return mCellValue == Player.PLAYER1 ? Outcome.PLAYER1_WINS : Outcome.PLAYER2_WINS;
         }
-        // nobody won, return draw if it is, nothing if it's not
-        return draw ? Outcome.DRAW : Outcome.NOTHING;
+        // nobody won, return mDraw if it is, nothing if it's not
+        return mDraw ? Outcome.DRAW : Outcome.NOTHING;
     }
 
 
@@ -100,9 +101,9 @@ public class BoardLogic {
         // horizontalCheck
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols - 3; j++) {
-                cellValue = grid[i][j];
-                if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i][j + 1] == cellValue && grid[i][j + 2] == cellValue && grid[i][j + 3] == cellValue) {
+                mCellValue = mGrid[i][j];
+                if (mCellValue == 0) mDraw = false;
+                if (mCellValue != 0 && mGrid[i][j + 1] == mCellValue && mGrid[i][j + 2] == mCellValue && mGrid[i][j + 3] == mCellValue) {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "Horizontal check pass");
                     }
@@ -121,9 +122,9 @@ public class BoardLogic {
         // verticalCheck
         for (int j = 0; j < numCols; j++) {
             for (int i = 0; i < numRows - 3; i++) {
-                cellValue = grid[i][j];
-                if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i + 1][j] == cellValue && grid[i + 2][j] == cellValue && grid[i + 3][j] == cellValue) {
+                mCellValue = mGrid[i][j];
+                if (mCellValue == 0) mDraw = false;
+                if (mCellValue != 0 && mGrid[i + 1][j] == mCellValue && mGrid[i + 2][j] == mCellValue && mGrid[i + 3][j] == mCellValue) {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "Horizontal check pass");
                     }
@@ -142,9 +143,9 @@ public class BoardLogic {
         // ascendingDiagonalCheck
         for (int i = 3; i < numRows; i++) {
             for (int j = 0; j < numCols - 3; j++) {
-                cellValue = grid[i][j];
-                if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i - 1][j + 1] == cellValue && grid[i - 2][j + 2] == cellValue && grid[i - 3][j + 3] == cellValue) {
+                mCellValue = mGrid[i][j];
+                if (mCellValue == 0) mDraw = false;
+                if (mCellValue != 0 && mGrid[i - 1][j + 1] == mCellValue && mGrid[i - 2][j + 2] == mCellValue && mGrid[i - 3][j + 3] == mCellValue) {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "Horizontal check pass");
                     }
@@ -163,9 +164,9 @@ public class BoardLogic {
         // descendingDiagonalCheck
         for (int i = 3; i < numRows; i++) {
             for (int j = 3; j < numCols; j++) {
-                cellValue = grid[i][j];
-                if (cellValue == 0) draw = false;
-                if (cellValue != 0 && grid[i - 1][j - 1] == cellValue && grid[i - 2][j - 2] == cellValue && grid[i - 3][j - 3] == cellValue) {
+                mCellValue = mGrid[i][j];
+                if (mCellValue == 0) mDraw = false;
+                if (mCellValue != 0 && mGrid[i - 1][j - 1] == mCellValue && mGrid[i - 2][j - 2] == mCellValue && mGrid[i - 3][j - 3] == mCellValue) {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "Horizontal check pass");
                     }
@@ -183,7 +184,7 @@ public class BoardLogic {
     /**
      * Returns sprites of a winning combination
      *
-     * @param cells cell grid
+     * @param cells cell mGrid
      * @return winning move discs
      */
     @NonNull
@@ -196,13 +197,13 @@ public class BoardLogic {
     }
 
     /**
-     * placing a Move on the grid
+     * placing a Move on the mGrid
      */
 
     public void placeMove(int column, int player) {
-        if (free[column] > 0) {
-            grid[free[column] - 1][column] = player;
-            free[column]--;
+        if (mFree[column] > 0) {
+            mGrid[mFree[column] - 1][column] = player;
+            mFree[column]--;
         }
     }
 
@@ -212,9 +213,9 @@ public class BoardLogic {
      * @param column column to undo move
      */
     public void undoMove(int column) {
-        if (free[column] < numRows) {
-            free[column]++;
-            grid[free[column] - 1][column] = 0;
+        if (mFree[column] < numRows) {
+            mFree[column]++;
+            mGrid[mFree[column] - 1][column] = 0;
 
         }
     }
@@ -226,12 +227,12 @@ public class BoardLogic {
      * @return the height of the column
      */
     public int columnHeight(int index) {
-        return free[index];
+        return mFree[index];
     }
 
 
     /**
-     * Check if a counter at a specific grid position is involved in a match
+     * Check if a counter at a specific mGrid position is involved in a match
      *
      * @param column column the counter is in
      * @param row    row the counter is in
@@ -295,10 +296,10 @@ public class BoardLogic {
             } else break;
         }
 
-        return horizontal_matches >= COUNTERS_IN_MATCH-1
-                || vertical_matches >= COUNTERS_IN_MATCH-1
-                || forward_diagonal_matches >= COUNTERS_IN_MATCH-1
-                || backward_diagonal_matches >= COUNTERS_IN_MATCH-1;
+        return horizontal_matches >= COUNTERS_IN_MATCH - 1
+                || vertical_matches >= COUNTERS_IN_MATCH - 1
+                || forward_diagonal_matches >= COUNTERS_IN_MATCH - 1
+                || backward_diagonal_matches >= COUNTERS_IN_MATCH - 1;
     }
 
     /**
@@ -319,7 +320,7 @@ public class BoardLogic {
                 || rowB < 0 || rowB >= numRows) {
             return false;
         }
-        return !(grid[rowA][columnA] == 0 || grid[rowB][columnB] == 0) && grid[rowA][columnA] == grid[rowB][columnB];
+        return !(mGrid[rowA][columnA] == 0 || mGrid[rowB][columnB] == 0) && mGrid[rowA][columnA] == mGrid[rowB][columnB];
     }
 
     /**
@@ -329,7 +330,7 @@ public class BoardLogic {
         System.out.println();
         for (int i = 0; i <= 5; ++i) {
             for (int j = 0; j <= 6; ++j) {
-                System.out.print(grid[i][j] + " ");
+                System.out.print(mGrid[i][j] + " ");
             }
             System.out.println();
         }

@@ -66,11 +66,7 @@ public class MenuView extends RelativeLayout {
      * @param firstTurn game rule - first turn value
      */
     private void setFirstTurn(int firstTurn){
-        if(firstTurn == FirstTurn.PLAYER1){
-            ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player1);
-        }else {
-            ((RadioGroup) findViewById(R.id.first_turn)).check(R.id.first_turn_player2);
-        }
+        ((RadioGroup) findViewById(R.id.first_turn)).check(firstTurn == FirstTurn.PLAYER1 ? R.id.first_turn_player1 : R.id.first_turn_player2);
     }
 
     /**
@@ -78,11 +74,7 @@ public class MenuView extends RelativeLayout {
      * @param PLayer1Disc game rule - Player1 disc value
      */
     private void setPLayer1Disc(int PLayer1Disc){
-        if(PLayer1Disc == Disc.RED){
-            ((RadioGroup) findViewById(R.id.player1_disc)).check(R.id.disc_red);
-        }else {
-            ((RadioGroup) findViewById(R.id.player1_disc)).check(R.id.disc_yellow);
-        }
+        ((RadioGroup) findViewById(R.id.player1_disc)).check(PLayer1Disc == Disc.RED ? R.id.disc_red : R.id.disc_yellow);
     }
 
     /**

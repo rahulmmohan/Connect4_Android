@@ -6,33 +6,33 @@ package info.overrideandroid.connect4.ai;
 
 class Move {
 
-    private final int column;
-    private final int score;
+    private final int mColumn;
+    private final int mScore;
 
     /**
-     * @param column column the move is in
-     * @param score  the score of the move
+     * @param column mColumn the move is in
+     * @param score  the mScore of the move
      */
     public Move(int column, int score) {
-        this.column = column;
-        this.score = score;
+        this.mColumn = column;
+        this.mScore = score;
     }
 
     /**
-     * Get the column the move is in
+     * Get the mColumn the move is in
      *
-     * @return the column the move is in
+     * @return the mColumn the move is in
      */
     public int getColumn() {
-        return column;
+        return mColumn;
     }
 
     /**
-     * Get the score of the move
+     * Get the mScore of the move
      *
-     * @return the score of the move
+     * @return the mScore of the move
      */
     public int getScore() {
-        return score;
+        return mScore;
     }
 }
