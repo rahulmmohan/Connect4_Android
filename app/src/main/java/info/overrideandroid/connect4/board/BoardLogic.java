@@ -126,7 +126,7 @@ public class BoardLogic {
                 if (mCellValue == 0) mDraw = false;
                 if (mCellValue != 0 && mGrid[i + 1][j] == mCellValue && mGrid[i + 2][j] == mCellValue && mGrid[i + 3][j] == mCellValue) {
                     if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "Horizontal check pass");
+                        Log.e(TAG, "Vertical check pass");
                     }
                     p = i;
                     q = j;
@@ -147,7 +147,7 @@ public class BoardLogic {
                 if (mCellValue == 0) mDraw = false;
                 if (mCellValue != 0 && mGrid[i - 1][j + 1] == mCellValue && mGrid[i - 2][j + 2] == mCellValue && mGrid[i - 3][j + 3] == mCellValue) {
                     if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "Horizontal check pass");
+                        Log.e(TAG, "ascendingDiagonal check pass");
                     }
                     p = i;
                     q = j;
@@ -168,7 +168,7 @@ public class BoardLogic {
                 if (mCellValue == 0) mDraw = false;
                 if (mCellValue != 0 && mGrid[i - 1][j - 1] == mCellValue && mGrid[i - 2][j - 2] == mCellValue && mGrid[i - 3][j - 3] == mCellValue) {
                     if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "Horizontal check pass");
+                        Log.e(TAG, "descendingDiagonal check pass");
                     }
                     p = i;
                     q = j;
