@@ -13,7 +13,7 @@
     </style>
 
     <style name="AppTheme.WhiteAccent">
-        <item name="colorAccent">@color/white</item> <!-- Whatever color you want-->
+        <item name="colorAccent">@android:color/white</item> <!-- Whatever color you want-->
     </style>
 
     <style name="RadioButtonStyle" parent="@android:style/Widget.CompoundButton">
