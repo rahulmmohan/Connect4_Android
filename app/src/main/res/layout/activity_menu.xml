@@ -5,13 +5,30 @@
     android:background="#1FCFC1"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/ic_play" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/separator">
+
+        <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/play"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_play" />
+        <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/achievements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_026_trophy" />
+    </RelativeLayout>
+
 
     <View
+        android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_above="@+id/linearlayout"
@@ -22,32 +39,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:padding="10dp"
         android:weightSum="4">
 
-        <ImageView
+        <info.overrideandroid.connect4.view.BouncingButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_settings3"
-            android:tint="" />
+            android:background="@null"
+            android:src="@drawable/ic_settings" />
 
-        <ImageView
+        <info.overrideandroid.connect4.view.BouncingButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:src="@drawable/ic_question" />
 
-        <ImageView
+        <info.overrideandroid.connect4.view.BouncingButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_rate2" />
+            android:background="@null"
+            android:src="@drawable/ic_rate" />
 
-        <ImageView
+        <info.overrideandroid.connect4.view.BouncingButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_share2" />
+            android:background="@null"
+            android:src="@drawable/ic_share" />
     </LinearLayout>
 </RelativeLayout>
