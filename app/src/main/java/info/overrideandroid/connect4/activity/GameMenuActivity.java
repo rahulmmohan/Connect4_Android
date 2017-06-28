@@ -6,6 +6,7 @@ import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GameMenuController;
+import info.overrideandroid.connect4.fragments.BottomSheet3DialogFragment;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.view.MenuView;
 
@@ -30,6 +32,14 @@ public class GameMenuActivity extends AppCompatActivity implements GameMenuContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheet3DialogFragment();
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+
+            }
+        });
 //        MenuView menuView = (MenuView) findViewById(R.id.menuView);
 //        GameMenuController gameMenuController =new GameMenuController(this, menuView);
 //        menuView.setListeners(gameMenuController);
