@@ -2,81 +2,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="#4fffff"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1FCFC1"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        app:navigationIcon="@drawable/ic_action_close"
+        app:title="Game Mode"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
-        app:titleTextColor="@android:color/black"
-        app:navigationIcon="@drawable/ic_action_close_black"
-        app:title="Game Mode" />
+        app:titleTextColor="@android:color/white" />
 
-    <TableLayout
-        android:id="@+id/game_mode"
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:stretchColumns="*">
+        android:layout_height="wrap_content">
 
-        <TableRow
+        <TableLayout
+            android:layout_weight="1"
+            android:id="@+id/game_mode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="220dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:stretchColumns="*">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <info.overrideandroid.connect4.view.BouncingButton
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ic_single" />
-
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Against the Computer"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
+                    <info.overrideandroid.connect4.view.BouncingButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_single" />
 
-                <info.overrideandroid.connect4.view.BouncingButton
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ic_multi" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Against the Computer"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Two on the same screen"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </TableRow>
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <info.overrideandroid.connect4.view.BouncingButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_multi" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Two on the same screen"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </TableRow>
 
 
             <LinearLayout
-                android:id="@+id/online"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -84,8 +88,9 @@
                 android:padding="10dp">
 
                 <info.overrideandroid.connect4.view.BouncingButton
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:id="@+id/online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/ic_online" />
 
                 <TextView
@@ -94,96 +99,99 @@
                     android:gravity="center"
                     android:text="Online"
                     android:textAllCaps="true"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
             </LinearLayout>
 
-    </TableLayout>
-    <TableLayout
-        android:visibility="gone"
-        android:id="@+id/online_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:stretchColumns="*">
+        </TableLayout>
 
-        <TableRow
+        <TableLayout
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:id="@+id/online_mode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="220dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:stretchColumns="*">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <info.overrideandroid.connect4.view.BouncingButton
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ic_quick" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Quick game"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <info.overrideandroid.connect4.view.BouncingButton
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ic_invitation" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="My Invitations"
-                    android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </TableRow>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <info.overrideandroid.connect4.view.BouncingButton
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/ic_invite" />
-
-            <TextView
+            <TableRow
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <info.overrideandroid.connect4.view.BouncingButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_quick" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Quick game"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <info.overrideandroid.connect4.view.BouncingButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_invitation" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="My Invitations"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </TableRow>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Invite a friend"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:padding="10dp">
 
-    </TableLayout>
+                <info.overrideandroid.connect4.view.BouncingButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_invite" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Invite a friend"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+        </TableLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

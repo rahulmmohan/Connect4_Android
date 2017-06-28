@@ -1,12 +1,10 @@
 package info.overrideandroid.connect4.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import info.overrideandroid.connect4.R;
 
@@ -22,8 +20,15 @@ public class BottomSheet3DialogFragment extends BottomSheetDialogFragment {
         contentView.findViewById(R.id.online).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contentView.findViewById(R.id.game_mode).setVisibility(View.GONE);
-                contentView.findViewById(R.id.online_mode).setVisibility(View.VISIBLE);
+                contentView.findViewById(R.id.game_mode).animate().translationX(-contentView.findViewById(R.id.game_mode).
+                                getWidth()).setDuration(500).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        contentView.findViewById(R.id.game_mode).setVisibility(View.GONE);
+                        contentView.findViewById(R.id.online_mode).setVisibility(View.VISIBLE);
+                    }
+                }).start();
             }
         });
         dialog.setContentView(contentView);
