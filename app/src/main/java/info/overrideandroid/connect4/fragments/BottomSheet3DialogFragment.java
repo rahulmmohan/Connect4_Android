@@ -16,7 +16,7 @@ public class BottomSheet3DialogFragment extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        final View contentView = View.inflate(getContext(), R.layout.fragment_bottomsheet3, null);
+        final View contentView = View.inflate(getContext(), R.layout.fragment_game_mode, null);
         contentView.findViewById(R.id.online).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

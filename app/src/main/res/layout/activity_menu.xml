@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<info.overrideandroid.connect4.view.GameMenuView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1FCFC1"
@@ -16,13 +16,14 @@
             android:layout_height="150dp"
             android:layout_centerInParent="true"
             android:background="@drawable/ic_play" />
+
         <info.overrideandroid.connect4.view.BouncingButton
             android:id="@+id/achievements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
             android:src="@drawable/ic_026_trophy" />
     </RelativeLayout>
 
@@ -44,6 +45,7 @@
         android:weightSum="4">
 
         <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,6 +53,7 @@
             android:src="@drawable/ic_settings" />
 
         <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/help"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,6 +61,7 @@
             android:src="@drawable/ic_question" />
 
         <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/rate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -65,10 +69,11 @@
             android:src="@drawable/ic_rate" />
 
         <info.overrideandroid.connect4.view.BouncingButton
+            android:id="@+id/share"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:src="@drawable/ic_share" />
     </LinearLayout>
-</RelativeLayout>
+</info.overrideandroid.connect4.view.GameMenuView>
