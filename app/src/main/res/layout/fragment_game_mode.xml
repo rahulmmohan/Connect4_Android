@@ -8,11 +8,11 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_action_close"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_action_close_black"
         app:title="Game Mode"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/black" />
 
     <LinearLayout
         android:weightSum="2"
@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:id="@+id/game_mode"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:stretchColumns="*">
 
@@ -50,9 +50,9 @@
                         android:gravity="center"
                         android:text="Against the Computer"
                         android:textAllCaps="true"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp"
-                        android:textStyle="normal" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -73,14 +73,15 @@
                         android:gravity="center"
                         android:text="Two on the same screen"
                         android:textAllCaps="true"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp"
-                        android:textStyle="normal" />
+                        android:textStyle="bold" />
                 </LinearLayout>
             </TableRow>
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
