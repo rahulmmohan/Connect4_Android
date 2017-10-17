@@ -7,8 +7,8 @@
     <string name="level_2">Hard</string>
 
     <!-- game opponent modes -->
-    <string name="opponent_ai">COMPUTER</string>
-    <string name="opponent_player">FRIEND</string>
+    <string name="opponent_ai">Computer</string>
+    <string name="opponent_player">Friend</string>
 
     <string name="you">You</string>
     <string name="restart_game">restart Game</string>

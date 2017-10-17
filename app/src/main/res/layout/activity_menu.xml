@@ -2,7 +2,7 @@
 <info.overrideandroid.connect4.view.GameMenuView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1FCFC1"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -12,6 +12,7 @@
 
         <info.overrideandroid.connect4.view.BouncingButton
             android:id="@+id/play"
+            android:tint="@color/colorPrimary"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerInParent="true"

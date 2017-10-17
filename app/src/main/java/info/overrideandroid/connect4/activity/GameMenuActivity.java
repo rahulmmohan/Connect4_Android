@@ -35,8 +35,9 @@ public class GameMenuActivity extends AppCompatActivity implements GameMenuContr
         findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheet3DialogFragment();
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                onPlay(new GameRules());
+//                BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheet3DialogFragment();
+//                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
 
             }
         });

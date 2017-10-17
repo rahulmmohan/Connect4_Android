@@ -5,6 +5,7 @@
     android:clipChildren="false">
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -12,6 +13,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -19,6 +21,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -26,6 +29,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -33,6 +37,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -40,6 +45,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
@@ -47,6 +53,7 @@
         android:src="@drawable/cell_frame" />
 
     <ImageView
+        android:tint="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".17"
