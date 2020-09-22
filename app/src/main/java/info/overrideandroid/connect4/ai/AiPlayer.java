@@ -1,8 +1,8 @@
 package info.overrideandroid.connect4.ai;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.board.BoardLogic;
 import info.overrideandroid.connect4.controller.GamePlayController;

@@ -1,11 +1,11 @@
 package info.overrideandroid.connect4.board;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.controller.GamePlayController;
 import info.overrideandroid.connect4.rules.Player;

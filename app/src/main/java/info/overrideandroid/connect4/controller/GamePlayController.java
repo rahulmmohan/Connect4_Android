@@ -2,14 +2,14 @@ package info.overrideandroid.connect4.controller;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import info.overrideandroid.connect4.BuildConfig;
 import info.overrideandroid.connect4.activity.GamePlayActivity;
 import info.overrideandroid.connect4.ai.AiPlayer;
