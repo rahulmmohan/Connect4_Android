@@ -2,12 +2,12 @@ package info.overrideandroid.connect4.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GamePlayController;
 import info.overrideandroid.connect4.rules.GameRules;

@@ -1,10 +1,10 @@
 package info.overrideandroid.connect4.activity;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GameMenuController;
 import info.overrideandroid.connect4.rules.GameRules;

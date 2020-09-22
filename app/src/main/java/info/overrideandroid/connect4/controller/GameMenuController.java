@@ -1,10 +1,10 @@
 package info.overrideandroid.connect4.controller;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.rules.GameRules;
 import info.overrideandroid.connect4.rules.GameRules.Disc;

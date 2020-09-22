@@ -1,13 +1,13 @@
 package info.overrideandroid.connect4.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
 import info.overrideandroid.connect4.R;
 import info.overrideandroid.connect4.controller.GameMenuController;
 import info.overrideandroid.connect4.rules.GameRules;
